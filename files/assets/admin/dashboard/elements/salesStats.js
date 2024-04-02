@@ -1,3 +1,4 @@
+{import { fetchFunction } from "../../modules.js"}
 function lifetTimeSales(){
     
     return `
