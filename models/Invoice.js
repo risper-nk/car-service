@@ -26,6 +26,10 @@ const invoiceSchema = mongoose.Schema({
         type: String,
       
     },
+    cancelled: {
+        type: Boolean,
+        default: false,
+    },
 	
 	complete: {
         type: Boolean,

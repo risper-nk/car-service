@@ -15,38 +15,6 @@ const Invoice = require("../models/Invoice")
 const Handler = require ("../models/Handler")
 
 
-router.post('/getAnalysis',auth,  async (req, res) => {
-	try {
-	  const result = {}
-	  const company_id = req.user.company
-	  const company = await Company.findById(company_id)
-	  const invoice = await Invoice.find({company:company_id})
-	  const bookings = await Book.find({company:company_id})
-	  const services = await Service.find({company:company_id})
-	  const handler = await Handler.find({company:company_id}) 
-	  const category = await Category.find({company:company_id}) 
-	  result.invoice = {data:[],total:0,complete:0}
-	  for(var inv of invoice){
-		const r = {}
-		const user = await User.findById(inv.user)
-		r.invoice = inv
-		r.user = user
-		if(inv.complete === true){
-			result.invoice.complete += 1
-		}
-		result.invoice.total += 1
-	  }
-	  result.services = services
-	  result.handlers = handler
-	  result.category = category
-	  result.bookings = bookings
-	  
-	  return res.status(200).json(result)
-	} catch (error) {
-	  console.error(error.message)
-	  res.status(500).send('Server Error')
-	}
-})
 
 router.post('/book/:id',auth,  async (req, res) => {
 	try {
@@ -97,6 +65,11 @@ router.post('/deleteBook/:id',auth,  async (req, res) => {
 	  }
 	  if(book.user.toString() === req.user.id){
 		await Book.findByIdAndDelete(book._id)
+		await Invoice.findByIdAndUpdate(
+			book.invoice,
+			{ $set:{cancelled:true} },
+			{ new: true },  
+		)
 		result.message = "Booking removed succsffully"
 	  }else{
 		result.message = "Anaouthirised acess"
