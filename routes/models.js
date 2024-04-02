@@ -19,11 +19,28 @@ router.post('/getAnalysis',auth,  async (req, res) => {
 	try {
 	  const result = {}
 	  const company_id = req.user.company
+	  const company = await Company.findById(company_id)
 	  const invoice = await Invoice.find({company:company_id})
 	  const bookings = await Book.find({company:company_id})
-	  const services = await Services.find({company:company_id})
+	  const services = await Service.find({company:company_id})
 	  const handler = await Handler.find({company:company_id}) 
+	  const category = await Category.find({company:company_id}) 
 	  result.invoice = {data:[],total:0,complete:0}
+	  for(var inv of invoice){
+		const r = {}
+		const user = await User.findById(inv.user)
+		r.invoice = inv
+		r.user = user
+		if(inv.complete === true){
+			result.invoice.complete += 1
+		}
+		result.invoice.total += 1
+	  }
+	  result.services = services
+	  result.handlers = handler
+	  result.category = category
+	  result.bookings = bookings
+	  
 	  return res.status(200).json(result)
 	} catch (error) {
 	  console.error(error.message)
@@ -54,6 +71,7 @@ router.post('/book/:id',auth,  async (req, res) => {
 	  invoice.booking = book._id
 	  invoice.company = company._id
 	  invoice.amount = price
+	  invoice.user = req.user.id
 	  book.user = req.user.id
 	  book.company = company._id
 	  await book.save()
