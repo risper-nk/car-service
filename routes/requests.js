@@ -14,7 +14,7 @@ const Profile = require('../models/Profile')
 const Active = require('../models/Active')
 const Book = require('../models/Booking')
 const Vehicle = require('../models/Vehicle')
-const Spot = require('../models/Spot')
+
 const Category = require("../models/Category.js")
 const Company = require("../models/Company.js")
 const Paypal = require("../models/Paypal.js")

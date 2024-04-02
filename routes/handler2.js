@@ -14,7 +14,7 @@ const Parked = require('../models/Parked')
 const Book = require('../models/Booking')
 const Invoice = require('../models/Invoice')
 const Vehicle = require('../models/Vehicle')
-const Parking = require('../models/Parking')
+
 
 //@route GET api/models/handler
 //@description Get all checkins made by handler
@@ -52,8 +52,7 @@ router.get('/getDetail/:id', auth, async (req, res) => {
 		return res.status(404).json({message:"Not Found"})
 	  }
 	  result.book = book
-	  const location = await Parking.findById(book.parking)
-	  result.location = location
+	 
 	  const invoice = await Invoice.findById(book.invoice)
 	  if(!invoice){
 		  const inv = new Invoice(book)
@@ -159,7 +158,7 @@ router.post('/makeEntry',
 			if(!booking){
 				return res.status(404).json({message: "Booking not found" })
 			}
-			const location = await Parking.findById(booking.parking)
+			const location = await Service.findById(booking.service)
 			if(handler.company.toString() != location.company.toString()){
 				return res.status(401).json({message:"Anauthorised request, Request outside company"})
 			}
