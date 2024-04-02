@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html id="root" lang="en">
+    <head>
+        <meta charset="utf-8"/>
+        <script>
+            var eContext = {
+                "graphqlResponse": {
+                    "ee8xunk5shlnt0g54c": {
+                        "adminUserId": 5,
+                        "fullName": "Demo",
+                        "email": "demo@evershop.io"
+                    },
+                    "ee8xunk5shlnt0g54d": "/admin/user/logout",
+                    "ee8xunk5shlnt0g54e": "/admin/login",
+                    "ee8xunk5shlnt0g54f": "/admin/products",
+                    "ee8xunk5shlnt0g54g": "/admin/categories",
+                    "ee8xunk5shlnt0g54h": "/admin/attributes",
+                    "ee8xunk5shlnt0g54i": "/admin/collections",
+                    "ee8xunk5shlnt0g54j": "/admin/products/new",
+                    "ee8xunk5shlnt0g54k": "/admin/pages",
+                    "ee8xunk5shlnt0g54l": "/admin",
+                    "ee8xunk5shlnt0g54m": {
+                        "title": "Dashboard",
+                        "description": "dashboard"
+                    },
+                    "ee8xunk5shlnt0g54n": "/admin",
+                    "ee8xunk5shlnt0g54o": "/admin/customers",
+                    "ee8xunk5shlnt0g54p": "/admin/orders",
+                    "ee8xunk5shlnt0g54q": "/admin/setting/shipping",
+                    "ee8xunk5shlnt0g54r": "/api/bestsellers",
+                    "ee8xunk5shlnt0g54s": "/admin/products",
+                    "ee8xunk5shlnt0g54t": "/api/lifetimesales",
+                    "ee8xunk5shlnt0g54u": "/api/salestatistic",
+                    "ee8xunk5shlnt0g54v": "/admin/coupons",
+                    "ee8xunk5shlnt0g54w": "/admin/coupon/new",
+                    "ee8xunk5shlnt0g54x": "/admin/setting/payments",
+                    "ee8xunk5shlnt0g54y": "/admin/setting/store",
+                    "ee8xunk5shlnt0g54z": "/admin/setting/store",
+                    "ee8xunk5shlnt0g550": "/admin/setting/tax"
+                },
+                "propsMap": {
+                    "L25vZGVfbW9kdWxlcy9AZXZlcnNob3AvZXZlcnNob3Avc3JjL21vZHVsZXMvYXV0aC9wYWdlcy9hZG1pbi9hbGwvQWRtaW5Vc2VyLmpzeA==": [{
+                        "origin": "adminUser",
+                        "alias": "ee8xunk5shlnt0g54c"
+                    }, {
+                        "origin": "logoutUrl",
+                        "alias": "ee8xunk5shlnt0g54d"
+                    }, {
+                        "origin": "loginPage",
+                        "alias": "ee8xunk5shlnt0g54e"
+                    }],
+                    "L25vZGVfbW9kdWxlcy9AZXZlcnNob3AvZXZlcnNob3Avc3JjL21vZHVsZXMvY2F0YWxvZy9wYWdlcy9hZG1pbi9hbGwvQ2F0YWxvZ01lbnVHcm91cC5qc3g=": [{
+                        "origin": "productGrid",
+                        "alias": "ee8xunk5shlnt0g54f"
+                    }, {
+                        "origin": "categoryGrid",
+                        "alias": "ee8xunk5shlnt0g54g"
+                    }, {
+                        "origin": "attributeGrid",
+                        "alias": "ee8xunk5shlnt0g54h"
+                    }, {
+                        "origin": "collectionGrid",
+                        "alias": "ee8xunk5shlnt0g54i"
+                    }],
+                    "L25vZGVfbW9kdWxlcy9AZXZlcnNob3AvZXZlcnNob3Avc3JjL21vZHVsZXMvY2F0YWxvZy9wYWdlcy9hZG1pbi9hbGwvTmV3UHJvZHVjdFF1aWNrTGluay5qc3g=": [{
+                        "origin": "productNew",
+                        "alias": "ee8xunk5shlnt0g54j"
+                    }],
+                    "L25vZGVfbW9kdWxlcy9AZXZlcnNob3AvZXZlcnNob3Avc3JjL21vZHVsZXMvY21zL3BhZ2VzL2FkbWluL2FsbC9DbXNNZW51R3JvdXAuanN4": [{
+                        "origin": "cmsPageGrid",
+                        "alias": "ee8xunk5shlnt0g54k"
+                    }],
+                    "L25vZGVfbW9kdWxlcy9AZXZlcnNob3AvZXZlcnNob3Avc3JjL21vZHVsZXMvY21zL3BhZ2VzL2FkbWluL2FsbC9MYXlvdXQuanN4": [],
+                    "L25vZGVfbW9kdWxlcy9AZXZlcnNob3AvZXZlcnNob3Avc3JjL21vZHVsZXMvY21zL3BhZ2VzL2FkbWluL2FsbC9Mb2dvLmpzeA==": [{
+                        "origin": "dashboardUrl",
+                        "alias": "ee8xunk5shlnt0g54l"
+                    }],
+                    "L25vZGVfbW9kdWxlcy9AZXZlcnNob3AvZXZlcnNob3Avc3JjL21vZHVsZXMvY21zL3BhZ2VzL2FkbWluL2FsbC9NZXRhLmpzeA==": [{
+                        "origin": "pageInfo",
+                        "alias": "ee8xunk5shlnt0g54m"
+                    }],
+                    "L25vZGVfbW9kdWxlcy9AZXZlcnNob3AvZXZlcnNob3Avc3JjL21vZHVsZXMvY21zL3BhZ2VzL2FkbWluL2FsbC9OYXZpZ2F0aW9uLmpzeA==": [],
+                    "L25vZGVfbW9kdWxlcy9AZXZlcnNob3AvZXZlcnNob3Avc3JjL21vZHVsZXMvY21zL3BhZ2VzL2FkbWluL2FsbC9Ob3RpZmljYXRpb24uanN4": [],
+                    "L25vZGVfbW9kdWxlcy9AZXZlcnNob3AvZXZlcnNob3Avc3JjL21vZHVsZXMvY21zL3BhZ2VzL2FkbWluL2FsbC9RdWlja0xpbmtzLmpzeA==": [{
+                        "origin": "dashboard",
+                        "alias": "ee8xunk5shlnt0g54n"
+                    }],
+                    "L25vZGVfbW9kdWxlcy9AZXZlcnNob3AvZXZlcnNob3Avc3JjL21vZHVsZXMvY21zL3BhZ2VzL2FkbWluL2FsbC9TZWFyY2hCb3guanN4": [],
+                    "L25vZGVfbW9kdWxlcy9AZXZlcnNob3AvZXZlcnNob3Avc3JjL21vZHVsZXMvY21zL3BhZ2VzL2FkbWluL2Rhc2hib2FyZC9MYXlvdXQuanN4": [],
+                    "L25vZGVfbW9kdWxlcy9AZXZlcnNob3AvZXZlcnNob3Avc3JjL21vZHVsZXMvY21zL3BhZ2VzL2FkbWluL2Rhc2hib2FyZC9QYWdlSGVhZGluZy5qc3g=": [],
+                    "L25vZGVfbW9kdWxlcy9AZXZlcnNob3AvZXZlcnNob3Avc3JjL21vZHVsZXMvY3VzdG9tZXIvcGFnZXMvYWRtaW4vYWxsL0N1c3RvbWVyTWVudUdyb3VwLmpzeA==": [{
+                        "origin": "customerGrid",
+                        "alias": "ee8xunk5shlnt0g54o"
+                    }],
+                    "L25vZGVfbW9kdWxlcy9AZXZlcnNob3AvZXZlcnNob3Avc3JjL21vZHVsZXMvb21zL3BhZ2VzL2FkbWluL2FsbC9PbXNNZW51R3JvdXAuanN4": [{
+                        "origin": "orderGrid",
+                        "alias": "ee8xunk5shlnt0g54p"
+                    }],
+                    "L25vZGVfbW9kdWxlcy9AZXZlcnNob3AvZXZlcnNob3Avc3JjL21vZHVsZXMvb21zL3BhZ2VzL2FkbWluL2FsbC9TaGlwcGluZ1NldHRpbmdNZW51LmpzeA==": [{
+                        "origin": "shippingSettingUrl",
+                        "alias": "ee8xunk5shlnt0g54q"
+                    }],
+                    "L25vZGVfbW9kdWxlcy9AZXZlcnNob3AvZXZlcnNob3Avc3JjL21vZHVsZXMvb21zL3BhZ2VzL2FkbWluL2Rhc2hib2FyZC9CZXN0Y3VzdG9tZXJzLmpzeA==": [],
+                    "L25vZGVfbW9kdWxlcy9AZXZlcnNob3AvZXZlcnNob3Avc3JjL21vZHVsZXMvb21zL3BhZ2VzL2FkbWluL2Rhc2hib2FyZC9CZXN0c2VsbGVycy5qc3g=": [{
+                        "origin": "api",
+                        "alias": "ee8xunk5shlnt0g54r"
+                    }, {
+                        "origin": "listUrl",
+                        "alias": "ee8xunk5shlnt0g54s"
+                    }],
+                    "L25vZGVfbW9kdWxlcy9AZXZlcnNob3AvZXZlcnNob3Avc3JjL21vZHVsZXMvb21zL3BhZ2VzL2FkbWluL2Rhc2hib2FyZC9MaWZldGltZXNhbGVzLmpzeA==": [{
+                        "origin": "api",
+                        "alias": "ee8xunk5shlnt0g54t"
+                    }],
+                    "L25vZGVfbW9kdWxlcy9AZXZlcnNob3AvZXZlcnNob3Avc3JjL21vZHVsZXMvb21zL3BhZ2VzL2FkbWluL2Rhc2hib2FyZC9TdGF0aXN0aWMuanN4": [{
+                        "origin": "api",
+                        "alias": "ee8xunk5shlnt0g54u"
+                    }],
+                    "L25vZGVfbW9kdWxlcy9AZXZlcnNob3AvZXZlcnNob3Avc3JjL21vZHVsZXMvcHJvbW90aW9uL3BhZ2VzL2FkbWluL2FsbC9Db3Vwb25NZW51R3JvdXAuanN4": [{
+                        "origin": "couponGrid",
+                        "alias": "ee8xunk5shlnt0g54v"
+                    }],
+                    "L25vZGVfbW9kdWxlcy9AZXZlcnNob3AvZXZlcnNob3Avc3JjL21vZHVsZXMvcHJvbW90aW9uL3BhZ2VzL2FkbWluL2FsbC9OZXdDb3Vwb25RdWlja0xpbmsuanN4": [{
+                        "origin": "couponNew",
+                        "alias": "ee8xunk5shlnt0g54w"
+                    }],
+                    "L25vZGVfbW9kdWxlcy9AZXZlcnNob3AvZXZlcnNob3Avc3JjL21vZHVsZXMvc2V0dGluZy9wYWdlcy9hZG1pbi9hbGwvUGF5bWVudFNldHRpbmdNZW51LmpzeA==": [{
+                        "origin": "paymentSettingUrl",
+                        "alias": "ee8xunk5shlnt0g54x"
+                    }],
+                    "L25vZGVfbW9kdWxlcy9AZXZlcnNob3AvZXZlcnNob3Avc3JjL21vZHVsZXMvc2V0dGluZy9wYWdlcy9hZG1pbi9hbGwvU2V0dGluZ01lbnVHcm91cC5qc3g=": [{
+                        "origin": "storeSetting",
+                        "alias": "ee8xunk5shlnt0g54y"
+                    }],
+                    "L25vZGVfbW9kdWxlcy9AZXZlcnNob3AvZXZlcnNob3Avc3JjL21vZHVsZXMvc2V0dGluZy9wYWdlcy9hZG1pbi9hbGwvU3RvcmVTZXR0aW5nTWVudS5qc3g=": [{
+                        "origin": "storeSettingUrl",
+                        "alias": "ee8xunk5shlnt0g54z"
+                    }],
+                    "L25vZGVfbW9kdWxlcy9AZXZlcnNob3AvZXZlcnNob3Avc3JjL21vZHVsZXMvdGF4L3BhZ2VzL2FkbWluL2FsbC9UYXhTZXR0aW5nTWVudS5qc3g=": [{
+                        "origin": "taxSettingUrl",
+                        "alias": "ee8xunk5shlnt0g550"
+                    }]
+                }
+            }
+        </script>
+        <script src="/assets/global/js/jquery.bundle.js"></script>
+        <script type="module" src="/assets/admin/main.js"></script>
+        <script src="https://cdn.ckeditor.com/ckeditor5/41.2.1/classic/ckeditor.js"></script>
+
+        <link href="/assets/admin/dashboard/client/903d232babd9d1207624.css" rel="stylesheet"/>
+		<script src="/assets/admin/media.js"></script>
+        <link href="/assets/global/css/main.css" rel="stylesheet"/>
+		<link href="/assets/global/css/style.css" rel="stylesheet"/>
+		<link href="/assets/global/bootstrap/css/bootstrap.css" rel="stylesheet"/>
+		<link href="/assets/global/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+        <title>Dashboard</title>
+        <meta name="description" content="dashboard"/>
+    </head>
+    <body id="body">
+        <div id="app" class="bg-background">
+            <div class="wrapper">
+                <div class="header">
+                    <div class="logo">
+                        <a href="#/admin" class="flex items-end">
+                            
+                            <span class="font-bold">SHOP</span>
+                        </a>
+                    </div>
+                    <div class="search-box">
+                        <div class="form-field-container null">
+                            <div class="field-wrapper flex flex-grow">
+                                <div class="field-prefix align-middle">
+                                    <svg xmlns="http://www.w3.org/2000/svg" style="width:1.8rem;height:1.8rem" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                    </svg>
+                                </div>
+                                <input type="text" placeholder="Search"/>
+                                <div class="field-border"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="admin-user flex flex-grow justify-end items-center">
+                        <div class="flex justify-items-start gap-1 justify-center">
+                            <div class="relative">
+                                <a class="first-letter" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">D</a>
+                                <div class="dropdown-menu">
+                                    <h6 class="dropdown-header">Account info</h6>
+                                    <a class="dropdown-item" href="javascript:void(0)">Profile</a>
+                                    <a class="dropdown-item" href="javascript:void(0)" onclick="mediaLibrary()">Media Library</a>
+                                    <a class="dropdown-item" href="#/logout">Logout</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-wrapper" id="content-wrapper">
+                    <div class="admin-navigation">
+                        <div class="admin-nav-container">
+                            <div class="admin-nav">
+                                <ul class="list-unstyled">
+                                    <li class="root-nav-item nav-item">
+                                        <div class="flex justify-between items-center">
+                                            <div class="root-label flex justify-between items-center">
+                                                <span>Quick links</span>
+                                            </div>
+                                        </div>
+                                        <ul class="item-group">
+                                            <li class="nav-item">
+                                                <a href="#admin" class="flex justify-left">
+                                                    <i class="menu-icon">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                            <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
+                                                        </svg>
+                                                    </i>
+                                                    Dashboard
+                                                </a>
+                                            </li>
+                                           
+                                            <li class="nav-item">
+                                                <a href="#/admin/service/new" class="flex justify-left">
+                                                    <i class="menu-icon">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                            <path fill-rule="evenodd" d="M5 5a3 3 0 015-2.236A3 3 0 0114.83 6H16a2 2 0 110 4h-5V9a1 1 0 10-2 0v1H4a2 2 0 110-4h1.17C5.06 5.687 5 5.35 5 5zm4 1V5a1 1 0 10-1 1h1zm3 0a1 1 0 10-1-1v1h1z" clip-rule="evenodd"></path>
+                                                            <path d="M9 11H3v5a2 2 0 002 2h4v-7zM11 18h4a2 2 0 002-2v-5h-6v7z"></path>
+                                                        </svg>
+                                                    </i>
+                                                    New Service
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="#/admin/category/new" class="flex justify-left">
+                                                    <i class="menu-icon">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                            <path fill-rule="evenodd" d="M5 5a3 3 0 015-2.236A3 3 0 0114.83 6H16a2 2 0 110 4h-5V9a1 1 0 10-2 0v1H4a2 2 0 110-4h1.17C5.06 5.687 5 5.35 5 5zm4 1V5a1 1 0 10-1 1h1zm3 0a1 1 0 10-1-1v1h1z" clip-rule="evenodd"></path>
+                                                            <path d="M9 11H3v5a2 2 0 002 2h4v-7zM11 18h4a2 2 0 002-2v-5h-6v7z"></path>
+                                                        </svg>
+                                                    </i>
+                                                    New Category
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                   
+                                    
+                                    <li class="root-nav-item nav-item">
+                                        <div class="flex justify-between items-center">
+                                            <div class="root-label flex justify-between items-center">
+                                                <span>Sale</span>
+                                            </div>
+                                        </div>
+                                        <ul class="item-group">
+                                            <li class="nav-item">
+                                                <a href="#/admin/orders" class="flex justify-left">
+                                                    <i class="menu-icon">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                            <path d="M11 17a1 1 0 001.447.894l4-2A1 1 0 0017 15V9.236a1 1 0 00-1.447-.894l-4 2a1 1 0 00-.553.894V17zM15.211 6.276a1 1 0 000-1.788l-4.764-2.382a1 1 0 00-.894 0L4.789 4.488a1 1 0 000 1.788l4.764 2.382a1 1 0 00.894 0l4.764-2.382zM4.447 8.342A1 1 0 003 9.236V15a1 1 0 00.553.894l4 2A1 1 0 009 17v-5.764a1 1 0 00-.553-.894l-4-2z"></path>
+                                                        </svg>
+                                                    </i>
+                                                    Orders
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="root-nav-item nav-item">
+                                        <div class="flex justify-between items-center">
+                                            <div class="root-label flex justify-between items-center">
+                                                <span>Customer</span>
+                                            </div>
+                                        </div>
+                                        <ul class="item-group">
+                                            <li class="nav-item">
+                                                <a href="#/admin/customers" class="flex justify-left">
+                                                    <i class="menu-icon">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                            <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"></path>
+                                                        </svg>
+                                                    </i>
+                                                    Customers
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="root-nav-item nav-item">
+                                        <div class="flex justify-between items-center">
+                                            <div class="root-label flex justify-between items-center">
+                                                <span>Promotion</span>
+                                            </div>
+                                        </div>
+                                        <ul class="item-group">
+                                            <li class="nav-item">
+                                                <a href="#/admin/services" class="flex justify-left">
+                                                    <i class="menu-icon">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                            <path fill-rule="evenodd" d="M5 5a3 3 0 015-2.236A3 3 0 0114.83 6H16a2 2 0 110 4h-5V9a1 1 0 10-2 0v1H4a2 2 0 110-4h1.17C5.06 5.687 5 5.35 5 5zm4 1V5a1 1 0 10-1 1h1zm3 0a1 1 0 10-1-1v1h1z" clip-rule="evenodd"></path>
+                                                            <path d="M9 11H3v5a2 2 0 002 2h4v-7zM11 18h4a2 2 0 002-2v-5h-6v7z"></path>
+                                                        </svg>
+                                                    </i>
+                                                    Services
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="root-nav-item nav-item">
+                                        <div class="flex justify-between items-center">
+                                            <div class="root-label flex justify-between items-center">
+                                                <span>CMS</span>
+                                            </div>
+                                        </div>
+                                        <ul class="item-group">
+                                            <li class="nav-item">
+                                                <a href="#/admin/pages" class="flex justify-left">
+                                                    <i class="menu-icon">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                            <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd"></path>
+                                                        </svg>
+                                                    </i>
+                                                    Pages
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="root-nav-item nav-item">
+                                        <div class="flex justify-between items-center">
+                                            <div class="root-label flex justify-between items-center">
+                                                <span>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" width="15" height="15">
+                                                        <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"></path>
+                                                    </svg>
+                                                </span>
+                                                <a href="#/admin/setting/store">Setting</a>
+                                            </div>
+                                        </div>
+                                        <ul class="item-group"></ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="main-content" >
+                        <div id="main-content"></div> 
+                        <div class="footer">
+                            <div class="copyright">
+                                <span>Copyright © 2021 EverShop</span>
+                            </div>
+                            <div class="version">
+                                <span>Version 1.0 dev</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="Toastify" >
+                        <div class="Toastify__toast-container Toastify__toast-container--top-right" id="Toastify"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="/assets/global/bootstrap/js/bootstrap.bundle.js"></script>
+		<script src="/assets/global/bootstrap/js/bootstrap.bundle.min.js"></script>
+        
+        <script>
+            
+        </script>
+    </body>
+</html>
