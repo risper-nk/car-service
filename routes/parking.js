@@ -11,7 +11,7 @@ const Payment = require('../models/Payment')
 const Company = require('../models/Company')
 const Invoice = require('../models/Invoice')
 const Notification = require('../models/Notification')
-const Parked = require('../models/Parked')
+
 const Active = require('../models/Active')
 
 //@route GET api/parking

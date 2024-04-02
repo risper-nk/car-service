@@ -18,7 +18,7 @@ const Mail = require('../models/Mail')
 const Invoice = require('../models/Invoice')
 const Withdraw = require('../models/Withdraw')
 const Profile = require('../models/Profile')
-
+const Handler = require("../models/Handler")
 const Active = require('../models/Active')
 const Category = require("../models/Category")
 const Service = require("../models/Service")
@@ -37,6 +37,76 @@ router.get('/',  async (req, res) => {
 	  res.status(500).send('Server Error')
 	}
 })
+
+router.post('/bestSellers', auth, async (req, res) => {
+	try {
+	  const result = {}
+	  const company_id = req.user.company
+	  const books = await Book.find({company:company_id})
+	  var categories = []
+	  for(var book of books){
+		 for(var i of book.service_category){
+			
+			categories.push(i)
+		 }
+	  }
+	  var data = {}
+	  var category_data = []
+	  for(var category of categories){
+		if(!data[category]){
+			const ctg = await Category.findById(category)
+			category_data.push(ctg)
+			data[category] = 1
+		}else{
+			data[category] += 1
+		}
+	  }
+	  result.data = data
+	  result.categories	= category_data
+	  result.message = "Success"
+	  return res.status(200).json(result)
+	} catch (error) {
+	  console.error(error.message)
+	  res.status(500).send('Server Error')
+	}
+})
+
+router.post('/getAnalysis',auth,  async (req, res) => {
+	try {
+	  const result = {}
+	  const company_id = req.user.company
+	  const company = await Company.findById(company_id)
+	  const invoice = await Invoice.find({company:company_id})
+	  const bookings = await Book.find({company:company_id})
+	  const services = await Service.find({company:company_id})
+	  const handler = await Handler.find({company:company_id}) 
+	  const category = await Category.find({company:company_id}) 
+	  result.invoice = {data:[],total:0,complete:0,cancelled:0}
+	  for(var inv of invoice){
+		const r = {}
+		const user = await User.findById(inv.user)
+		r.invoice = inv
+		r.user = user
+		if(inv.complete === true){
+			result.invoice.complete += inv.amount
+		}
+		if(inv.cancelled == true){
+			result.invoice.cancelled+=1
+		}
+		result.invoice.total += inv.amount
+	  }
+	  result.services = services
+	  result.handlers = handler
+	  result.category = category
+	  result.bookings = bookings
+	  
+	  return res.status(200).json(result)
+	} catch (error) {
+	  console.error(error.message)
+	  res.status(500).send('Server Error')
+	}
+})
+
 
 router.post('/newService',auth,  async (req, res) => {
 	try {
