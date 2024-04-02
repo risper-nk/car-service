@@ -12,14 +12,13 @@ const Vehicle = require('../models/Vehicle')
 const Payment = require('../models/Payment')
 const Notification = require('../models/Notification')
 const Company = require('../models/Company')
-const Spot = require('../models/Spot')
+
 const Mail = require('../models/Mail')
-const Rate = require('../models/Rate')
-const Follow = require('../models/Follow')
+
 const Invoice = require('../models/Invoice')
 const Withdraw = require('../models/Withdraw')
 const Profile = require('../models/Profile')
-const Parked = require('../models/Parked')
+
 const Active = require('../models/Active')
 const Category = require("../models/Category")
 const Service = require("../models/Service")
