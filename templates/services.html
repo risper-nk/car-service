@@ -1,0 +1,107 @@
+{%extends 'index.html'%}
+
+{%block content%}
+
+<div class="theme-page padding-bottom-70">
+    <div class="vc_row wpb_row vc_row-fluid gray full-width page-header vertical-align-table">
+        <div class="vc_row wpb_row vc_inner vc_row-fluid">
+            <div class="page-header-left">
+                <h1> {{current_service['name']|upper}}</h1>
+            </div>
+            <div class="page-header-right">
+                <div class="bread-crumb-container">
+                  
+                    <ul class="bread-crumb">
+                        <li>
+                            <a href="/" title="Home">HOME</a>
+                        </li>
+                        <li class="separator">
+                            /
+                        </li>
+                        <li>
+                            {{current_service['name']|upper}}						</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix">
+        <section class="wpb-content-wrapper"><div class="vc_row wpb_row vc_row-fluid margin-top-70"><div class="wpb_column vc_column_container vc_col-sm-3"><div class="wpb_wrapper"><div class="vc_wp_custommenu wpb_content_element vertical-menu"><div class="widget widget_nav_menu"><div class="menu-services-menu-container">
+            <ul id="menu-services-menu" class="menu">
+                {%for service in services%}
+                    <li id="menu-item-{{service['key']}}" class="menu-item menu-item-type-post_type menu-item-object-ql_services menu-item-click"><a href="services?service={{service['key']}}&id={{current_service['_id']}}">{{service['name']}}</a></li>
+                {%endfor%}
+                <!---------current-menu-item-->
+                </ul>
+    </div></div></div><div class="call-to-action page-margin-top"><div class="hexagon small"><div class="sl-small-percent"></div></div>
+    <h4>ONLINE APPOINTMENT</h4><p class="description">Book your appointment now and get ${{current_service['discount']}} discount.</p>
+    <a class="more" href="/book?service={{current_service['key']}}&id={{current_service['_id']}}" title="MAKE APPOINTMENT"><span>MAKE APPOINTMENT</span></a></div><h6 class=" box-header page-margin-top">DOWNLOAD</h6><a class="cs-action-button template-arrow-circle-down margin-top-30" href="#" title="Download Brochure"><span>Download Brochure</span></a><a class="cs-action-button template-arrow-circle-down" href="#" title="Download Summary"><span>Download Summary</span></a></div></div><div class="wpb_column vc_column_container vc_col-sm-9"><div class="wpb_wrapper"><section class="wpb-content-wrapper"><div class="vc_row wpb_row vc_row-fluid"><div class="wpb_column vc_column_container vc_col-sm-6"><div class="wpb_wrapper">
+    <div class="wpb_single_image wpb_content_element vc_align_left   cs-lightbox">
+        
+        <figure class="wpb_wrapper vc_figure">
+            <a class="vc_single_image-wrapper   vc_box_border_grey" href="https://quanticalabs.com/wp_themes/carservice/files/2015/05/image_02.jpg" target="_self" style=""><img width="480" height="320" src="https://quanticalabs.com/wp_themes/carservice/files/2015/05/image_02-480x320.jpg" class="vc_single_image-img attachment-big-thumb" alt="" decoding="async" loading="lazy" title="image_02" srcset="https://quanticalabs.com/wp_themes/carservice/files/2015/05/image_02-480x320.jpg 480w, https://quanticalabs.com/wp_themes/carservice/files/2015/05/image_02-300x200.jpg 300w, https://quanticalabs.com/wp_themes/carservice/files/2015/05/image_02-570x380.jpg 570w, https://quanticalabs.com/wp_themes/carservice/files/2015/05/image_02-390x260.jpg 390w, https://quanticalabs.com/wp_themes/carservice/files/2015/05/image_02-270x180.jpg 270w, https://quanticalabs.com/wp_themes/carservice/files/2015/05/image_02.jpg 870w" sizes="(max-width: 480px) 100vw, 480px" style="display: block;"></a>
+        </figure>
+    </div>
+    </div></div><div class="wpb_column vc_column_container vc_col-sm-6"><div class="wpb_wrapper">
+    <div class="wpb_single_image wpb_content_element vc_align_left   cs-lightbox">
+        
+        <figure class="wpb_wrapper vc_figure">
+            <a class="vc_single_image-wrapper   vc_box_border_grey" href="https://quanticalabs.com/wp_themes/carservice/files/2015/05/image_08.jpg" target="_self" style=""><img width="480" height="320" src="https://quanticalabs.com/wp_themes/carservice/files/2015/05/image_08-480x320.jpg" class="vc_single_image-img attachment-big-thumb" alt="" decoding="async" loading="lazy" title="image_08" srcset="https://quanticalabs.com/wp_themes/carservice/files/2015/05/image_08-480x320.jpg 480w, https://quanticalabs.com/wp_themes/carservice/files/2015/05/image_08-300x200.jpg 300w, https://quanticalabs.com/wp_themes/carservice/files/2015/05/image_08-570x380.jpg 570w, https://quanticalabs.com/wp_themes/carservice/files/2015/05/image_08-390x260.jpg 390w, https://quanticalabs.com/wp_themes/carservice/files/2015/05/image_08-270x180.jpg 270w, https://quanticalabs.com/wp_themes/carservice/files/2015/05/image_08.jpg 870w" sizes="(max-width: 480px) 100vw, 480px" style="display: block;"></a>
+        </figure>
+    </div>
+    </div></div></div><div class="vc_row wpb_row vc_row-fluid page-margin-top"><div class="wpb_column vc_column_container vc_col-sm-12"><div class="wpb_wrapper"><h3 class=" box-header">SERVICE OVERVIEW</h3>
+    <div class="wpb_text_column wpb_content_element  margin-top-34">
+        <div class="wpb_wrapper">
+            <p>
+
+                {{current_service['description']| safe}}
+            </p>
+    
+        </div>
+    </div>
+    
+    <div class="wpb_text_column wpb_content_element ">
+        <div class="wpb_wrapper">
+            
+    
+        </div>
+    </div>
+    <h3 class=" box-header page-margin-top">PRICING</h3>
+    <div class="wpb_raw_code wpb_content_element wpb_raw_html">
+        <div class="wpb_wrapper">
+            <table class="margin-top-40">
+    <tbody style="font-size:medium;text-align: left;">
+        {%for category in categories%}
+        <tr>
+            <td>{{category['name']}}</td>
+            <td>${{category['price']}}</td>
+        </tr>
+        {%endfor%}
+    </tbody>
+    </table>
+        </div>
+    </div>
+    </div></div></div>
+    </section></div></div></div>
+    </section>	</div>
+    </div>
+    <script>
+        $(document).ready(function(){
+            var service = "{{current_service['key']}}"
+            // Using .on() method (preferred for dyn}amic elements)
+            //$(document).on('click', '.menu-item', function(){
+                $('.menu-item-click').each(function(){
+                    $(this).removeClass('current-menu-item');
+                    if($(this).attr('id').includes(service)){
+                        
+                        var id = $(this).attr('id')
+
+                        $(this).addClass('current-menu-item')
+                    }
+                    
+                });
+                
+            //});
+});
+    </script>
+{%endblock%}
