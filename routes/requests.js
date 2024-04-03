@@ -32,18 +32,16 @@ router.post('/getCompany',admin,  async (req, res) => {
       result.message = "Not Authorised"
       return res.status(401).json(result)
     }
-    if(!company.profile){
+    console.log(company)
+    /*if(!company.profile){
       var new_profile = new Profile(company)
       new_profile.company = company._id
       await new_profile.save()
       company.profile = new_profile._id
-      await Company.findByIdAndUpdate(
-        company._id,
-        {$set:company},
-      )
-    }
-    const profile = await Profile.findById(company.profile)
-    result.profile = profile
+      
+    }*/
+    //const profile = await Profile.findById(company.profile)
+    //result.profile = profile
     result.taxes = []
     for(var tax of company.tax){
       const taxx = await Tax.findById(tax)
@@ -109,6 +107,7 @@ router.post('/Payments',admin,  async (req, res) => {
     if(!company.paypal){
       var new_paypal = new Paypal()
       new_paypal.company = company._id
+      new_paypal.name = "PayPal"
       await new_paypal.save()
       company.paypal = new_paypal._id
       await Company.findByIdAndUpdate(
@@ -119,6 +118,7 @@ router.post('/Payments',admin,  async (req, res) => {
     if(!company.stripe){
       var new_stripe = new Stripe()
       new_stripe.company = company._id
+      new_stripe.name = "Stripe"
       await new_stripe.save()
       company.stripe = new_stripe._id
       await Company.findByIdAndUpdate(
@@ -208,6 +208,25 @@ router.post('/setShipping',admin,  async (req, res) => {
     }
     
     result.profile = profile
+    return res.status(200).json(result)
+  } catch (error) {
+    console.error(error.message)
+    res.status(500).send('Server Error')
+  }
+})
+
+router.post('/getTax',admin,  async (req, res) => {
+  try {
+	  const result = {}
+    const data = req.body
+    const company_id = req.user.company
+    const company = await Company.findById(company_id).select("-password")
+    if(!company){
+      result.message = "Not Authorised"
+      return res.status(401).json(result)
+    }
+    const tax = await Tax.find({company:company_id}) 
+    result.tax = tax
     return res.status(200).json(result)
   } catch (error) {
     console.error(error.message)

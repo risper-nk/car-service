@@ -10,7 +10,14 @@ export const Routes = {
     "/admin/pages":"allPage",
     "/admin/services":"allServices",
     "/admin/service/new":"newService",
+<<<<<<< HEAD
     "/admin/services/new":"newService",
+=======
+    "/admin/worker/new":"newWorker",
+    "/admin/worker/edit":"editWorker",
+    "/admin/workers":"allWorker",
+    "/admin/mechanics":"allWorker",
+>>>>>>> 18d71d494ef5311247276ab6d1df06bb2ed1d9b7
     "/admin/services/edit":"editService",
     "/admin/categories":"allCategory",
     "/admin/categories/new":"newCategory",

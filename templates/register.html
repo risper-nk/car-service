@@ -35,24 +35,16 @@
                     <p class="error">{{msg}}</p>
                   {%endif%}
                   <form method="POST">
-                    <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
-                      <p class="lead fw-normal mb-0 me-3">Sign in with</p>
-                      <button type="button" class="btn btn-primary btn-floating mx-1">
-                        <i class="fab fa-facebook-f"></i>
-                      </button>
-          
-                      <button type="button" class="btn btn-primary btn-floating mx-1">
-                        <i class="fab fa-twitter"></i>
-                      </button>
-          
-                      <button type="button" class="btn btn-primary btn-floating mx-1">
-                        <i class="fab fa-linkedin-in"></i>
-                      </button>
-                    </div>
-          
+                    
                     <div class="divider d-flex align-items-center my-4">
-                      <p class="text-center fw-bold mx-3 mb-0">Or</p>
+                      <p class="text-center fw-bold mx-3 mb-0">Register</p>
                     </div>
+
+					<div class="form-outline mb-4">
+						<input type="text" name="name" id="form3Name3" class="form-control form-control-lg"
+						  placeholder="Enter a Name" />
+						<label class="form-label" for="form3Name3">Full Name</label>
+					  </div>
           
                     <!-- Email input -->
                     <div class="form-outline mb-4">
@@ -60,6 +52,12 @@
                         placeholder="Enter a valid email address" />
                       <label class="form-label" for="form3Example3">Email address</label>
                     </div>
+
+					<div class="form-outline mb-4">
+						<input type="text" name="phone" id="form3Phone3" class="form-control form-control-lg"
+						  placeholder="Enter a phone no 0712345678" />
+						<label class="form-label" for="form3Phone3">Phone</label>
+					  </div>
           
                     <!-- Password input -->
                     <div class="form-outline mb-3">
@@ -82,8 +80,8 @@
                     <div class="text-center text-lg-start mt-4 pt-2">
                       <button type="submit" class="btn btn-primary btn-lg"
                         style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
-                      <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="/register"
-                          class="link-danger">Register</a></p>
+                      <p class="small fw-bold mt-2 pt-1 mb-0">Have an account? <a href="/login"
+                          class="link-danger">Login</a></p>
                     </div>
           
                   </form>

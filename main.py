@@ -25,6 +25,27 @@ def dashboard():
 def checkout():
     return render_template("checkout.html",**locals())
 
+@app.route("/register",methods=['GET','POST'])
+def signup():
+    msg = None
+    if request.method == "POST" and "email" in request.form:
+        email = request.form["email"]
+        password = request.form["password"]
+        username = request.form["name"]
+        phone = request.form["phone"]
+        result = Register(username,password,email,phone,server=SERVER_NAME)
+        print("res",str(result))
+        if result != False:
+            if result.get('token') != None:
+                session["user"] = result['token']
+                return redirect("/dashboard")
+            if result.get("next") != None:
+                return redirect(result["next"])
+        msg = result.get('message') if isinstance(result,dict) else "Invalid credential"
+        #msg = "Invalid Credentials"
+    return render_template("register.html",msg=msg)
+
+
 @app.route("/login",methods=['GET','POST'])
 def login():
     msg = None

@@ -1,6 +1,6 @@
 import {id} from "./../id.js"
 import {editUser} from "./editUser.js"
-
+import { fetchFunction } from "../modules.js"
 export function newCustomer(){
     return 
 }
@@ -9,38 +9,45 @@ export function editCustomer(){
     return document.getElementById(id).innerHTML =editUser()
 }
 
-function fetchUsers(){
-    return `
-    <tr>
-        <td>
-            <div class="form-field-container null">
-                <div class="field-wrapper radio-field">
-                    <label>
-                        <input type="checkbox" value="0">
-                        <span class="checkbox-unchecked"></span><span class="pl-05"></span>
-                        <input type="hidden" value="0">
-                    </label>
+function fetchUsers(data){
+    let el = ``
+    for(var user of data.customers.data){
+        el+= `
+        <tr>
+            <td>
+                <div class="form-field-container null">
+                    <div class="field-wrapper radio-field">
+                        <label>
+                            <input type="checkbox" value="0">
+                            <span class="checkbox-unchecked"></span><span class="pl-05"></span>
+                            <input type="hidden" value="0">
+                        </label>
+                    </div>
                 </div>
-            </div>
-        </td>
-        <td>
-            <div>
-                <a class="hover:underline font-semibold" href="#/admin/customers/edit?=3f21ba44-7dc4-4580-8029-68e2c1f73e1e">bindu</a>
-            </div>
-        </td>
-       
-        <td>sdf@sdf.com</td>
-        <td>
-            <div class="flex justify-center">
-                <span class="success dot" style="width:1.2rem;height:1.2rem"></span>
-            </div>
-        </td>
-        <td><div><span>Mar 10, 2024</span></div></td>
-    </tr>
-    `
+            </td>
+            <td>
+                <div>
+                    <a class="hover:underline font-semibold" href="#/admin/customers/edit?=3f21ba44-7dc4-4580-8029-68e2c1f73e1e">${user.name}</a>
+                </div>
+            </td>
+           
+            <td>${user.email}</td>
+            <td>
+                <div class="flex justify-center">
+                    <span class="success dot" style="width:1.2rem;height:1.2rem"></span>
+                </div>
+            </td>
+            <td><div><span>${new Date(user.date).toUTCString()}</span></div></td>
+        </tr>
+        `
+    }
+    
 }
 
 export function allCustomer(){
+    fetchFunction("/api/models/admin/getCustomers",{},"post",function(data){
+        document.getElementById("userList").innerHTML = fetchUsers(data)
+    })
     return  document.getElementById(id).innerHTML =`
         <div class="main-content-inner">
             <div class="page-heading flex justify-between items-center">
@@ -55,8 +62,8 @@ export function allCustomer(){
                             <th class="column"><div class="table-header id-header"><div class="title" style="margin-bottom:1rem"><span>User Name</span></div><div class="filter" style="width:15rem"><div class="form-field-container null"><div class="field-wrapper flex flex-grow"><input type="text" placeholder="Product Name" value=""><div class="field-border"></div></div></div></div></div></th>
                         </tr>
                     </thead>
-                    <tbody><tr></tr>
-                        ${fetchUsers()}
+                    <tbody id="userList"><tr></tr>
+                       
                     </tbody>
                 </table>
             

@@ -5,20 +5,29 @@ import {fetchFunction,createAlert} from "../modules.js"
 export function serviceForm(data){
     let editor;
     const shipping_detail = {operator:undefined,price:undefined}
+<<<<<<< HEAD
     /*setTimeout(function(){
     
         ClassicEditor
+=======
+    setTimeout(function(){
+       /* ClassicEditor
+>>>>>>> 18d71d494ef5311247276ab6d1df06bb2ed1d9b7
             .create( document.querySelector( '#editor' ) )
             .then( newEditor => {
                 
                 editor = newEditor;
                 if(data !== undefined){
+<<<<<<< HEAD
                     editor.setData(data.description ? data.description : '')
+=======
+                    editor.setData(data.description)
+>>>>>>> 18d71d494ef5311247276ab6d1df06bb2ed1d9b7
                 }
             } )
             .catch( error => {
                 console.error( error );
-            } );
+            } );*/
         $("#ship_detail").click(function(e){
             if($(this).html().includes('plus')){
                
@@ -83,13 +92,13 @@ export function serviceForm(data){
                                 <div class="form-field-container null">
                                     <label for="service">service name</label>
                                     <div class="field-wrapper flex flex-grow">
-                                        <input type="text" name="service" placeholder="Enter service code" value=${data.service.name ? data : ''}><div class="field-border"></div>
+                                        <input type="text" name="service" placeholder="Enter service code" value=${data ? data.service.name : ''}><div class="field-border"></div>
                                     </div>
                                 </div>
                                 <div class="form-field-container null">
                                     <label for="service">service url key</label>
                                     <div class="field-wrapper flex flex-grow">
-                                        <input type="text" name="key" placeholder="Enter service key service_name" value=${data.service.key ? data : ''}><div class="field-border"></div>
+                                        <input type="text" name="key" placeholder="Enter service key service_name" value=${data ? data.service.key : ''}><div class="field-border"></div>
                                     </div>
                                 </div>
                                 <div class="form-field-container null">
@@ -102,7 +111,7 @@ export function serviceForm(data){
                                     <div class="form-field-container null">
                                         <label for="discount_amount">Discount amount</label>
                                         <div class="field-wrapper flex flex-grow">
-                                            <input type="text" name="discount_amount" placeholder="Discount amount" value=${data.service.discount ? data : ''}>
+                                            <input type="text" name="discount_amount" placeholder="Discount amount" value=${data? data.service.discount : ''}>
                                             <div class="field-border"></div>
                                         </div>
                                     </div>
