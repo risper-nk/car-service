@@ -1,49 +1,60 @@
 import {id} from "./../id.js"
 import {editOrder} from "./orderDetail.js"
-
+import { fetchFunction } from "../modules.js"
 export function newOrder(){
     return 
 }
 
-function fetchOrders(){
-    return `
-    <tr>
-        <td>
-            <div class="form-field-container null">
-                <div class="field-wrapper radio-field">
-                    <label>
-                        <input type="checkbox" value="0">
-                        <span class="checkbox-unchecked"></span><span class="pl-05"></span>
-                        <input type="hidden" value="0">
-                    </label>
+function fetchOrders(data){
+    console.log(data)
+    if(data === undefined){return ``}
+    let el = ``
+    for(var book of data.orders.data){
+        stet = "Processing" ? book.invoice.complete : "Pending"
+        el += `
+        <tr>
+            <td>
+                <div class="form-field-container null">
+                    <div class="field-wrapper radio-field">
+                        <label>
+                            <input type="checkbox" value="0">
+                            <span class="checkbox-unchecked"></span><span class="pl-05"></span>
+                            <input type="hidden" value="0">
+                        </label>
+                    </div>
                 </div>
+            </td>
+            <td>
+            <div>
+                <a class="hover:underline font-semibold" href="#/admin/order/edit?=${book.book._id}">#<!-- -->14737</a>
             </div>
-        </td>
-        <td>
-        <div>
-            <a class="hover:underline font-semibold" href="#/admin/order/edit?=c1beb3cc-7d01-4a59-8f9c-908b00c0eb82">#<!-- -->14737</a>
-        </div>
-        </td>
-        <td>
-            <div class="">
-                <span>Mar 10, 2024</span>
-            </div>
-        </td>
-        <td>sdf@sdf.com</td>
-        <td>
-            <span class="default badge"><span class="incomplete progress rounded-100"></span><span class="self-center title">Processing</span></span>
-
-        </td>
-        <td>
-            <span class="success badge"><span class="complete progress rounded-100"></span><span class="self-center title">Paid</span></span>
-            <div class="nodejscart-switch"><div><span>Yes</span></div></div>
-        </td>
-        <td>$1,666.00</td>
-    </tr>
-    `
+            </td>
+            <td>
+                <div class="">
+                    <span>${new Date(book.book.date)}</span>
+                </div>
+            </td>
+            <td>${book.user.email}</td>
+            <td>
+                <span class="default badge"><span class="incomplete progress rounded-100"></span><span class="self-center title">${stet}</span></span>
+    
+            </td>
+            <td>
+                <span class="success badge"><span class="complete progress rounded-100"></span><span class="self-center title">${"Paid" ? data.invoice.complete : "Pending"}</span></span>
+                <div class="nodejscart-switch"><div><span>${"Yes" ? data.invoice.complete : "No"}</span></div></div>
+            </td>
+            <td>$${book.invoice.amount}</td>
+        </tr>
+        `
+    }
+    return el
+   
 }
 
 export function allOrder(){
+    fetchFunction("/api/models/admin/getOrders",{},"post",function(data){
+        document.getElementById("orderList").innerHTML = fetchOrders(data)
+    })
     return  document.getElementById(id).innerHTML =`
         <div class="main-content-inner">
             <div class="page-heading flex justify-between items-center">
@@ -58,8 +69,8 @@ export function allOrder(){
                             <th class="column"><div class="table-header id-header"><div class="title" style="margin-bottom:1rem"><span>Attribute Name</span></div><div class="filter" style="width:15rem"><div class="form-field-container null"><div class="field-wrapper flex flex-grow"><input type="text" placeholder="Product Name" value=""><div class="field-border"></div></div></div></div></div></th>
                         </tr>
                     </thead>
-                    <tbody><tr></tr>
-                        ${fetchOrders()}
+                    <tbody id="orderList"><tr></tr>
+                        
                     </tbody>
                 </table>
             

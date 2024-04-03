@@ -1,5 +1,5 @@
-export function taxSettings(){
-    return `
+export function taxSettings(data){
+    return document.getElementById("setting-tab").innerHTML = `
     <div class="col-span-4 grid grid-cols-1 gap-2">
         <div class="card shadow">
             <div class="card-section border-b box-border">

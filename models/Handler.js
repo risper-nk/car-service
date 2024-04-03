@@ -9,6 +9,10 @@ const handlerSchema = mongoose.Schema({
         type: String,
         required: true,
     },
+    salary:{
+        type:Number,
+        default: 0,
+    },
     email: {
         type: String,
         

@@ -167,6 +167,28 @@ function bestSellers(data){
     return el
 }
 
+function recentOrders(datas){
+    console.log(datas)
+    let el = ``
+    for(var data of datas.bookings){
+        el += `
+        <tr>
+            <td>
+                <div class="grid-thumbnail text-border border border-divider p-075 rounded flex justify-center" style="width: 6rem; height: 6rem;">
+                    <img class="object-cover"srcc="" alt="">
+                </div>
+            </td>
+            <td>
+                <a href="/admin/orders/edit?39c877ab-a50b-40a6-a14b-283284205eae" class="font-semibold hover:underline">${data.user.name}</a>
+            </td>
+            <td>$${data.invoice.amount}</td>
+            <td>${data.service.name}</td>
+        </tr>
+        `
+    }
+    return el
+}
+
 export function salesStats(){
     fetchFunction("/api/models/admin/getAnalysis",{},"post",function(data){
         //console.log(data)
@@ -175,6 +197,10 @@ export function salesStats(){
     fetchFunction("/api/models/admin/bestSellers",{},"post",function(data){
         console.log(data)
         document.getElementById("bestSellers").innerHTML = bestSellers(data)
+    })
+    fetchFunction("/api/models/admin/recentOrders",{},"post",function(data){
+        console.log(data)
+        document.getElementById("recentOrders").innerHTML = recentOrders(data)
     })
     return `
         <div class="col-span-2 grid grid-cols-1 gap-2 auto-rows-max">
@@ -199,6 +225,21 @@ export function salesStats(){
                     <div class="card-session-content pt-lg">
                         <table class="listing bestsellers">
                             <tbody id="bestSellers">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <div class="card shadow">
+                <div class="flex justify-between card-header">
+                    <h2 class="card-title">Recent orders</h2>
+                </div>
+                <div class="" >
+                <div class="card-section border-b box-border">
+                    <div class="card-session-content pt-lg">
+                        <table class="listing bestsellers">
+                            <tbody id="recentOrders">
                             </tbody>
                         </table>
                     </div>

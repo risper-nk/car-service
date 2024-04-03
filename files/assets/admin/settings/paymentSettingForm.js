@@ -1,6 +1,6 @@
 
-export function paymentSettingForm(){
-    return  `
+export function paymentSettingForm(data){
+    return document.getElementById("setting-tab").innerHTML =  `
         <form id="paymentSettingForm" action="#/api/settings" method="POST">
             <div class="grid gap-2">
                 <div class="card shadow">

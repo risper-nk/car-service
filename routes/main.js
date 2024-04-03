@@ -38,6 +38,191 @@ router.get('/',  async (req, res) => {
 	}
 })
 
+router.post('/getCustomers',auth,  async (req, res) => {
+	try {
+	  const result = {}
+	  const company_id = req.user.company
+	  const invoice = await Invoice.find({company:company_id})
+	  result.customers = {data:[],total:0}
+	  for(var inv of invoice){
+		const r = {}
+		const user = await User.findById(inv.user)
+		r.user = user
+		r.invoice = inv
+		result.customers.data.push(r)
+		result.customers.total += 1
+	  }
+	  return res.status(200).json(result)
+	} catch (error) {
+	  console.error(error.message)
+	  res.status(500).send('Server Error')
+	}
+})
+
+router.post('/getOrders',auth,  async (req, res) => {
+	try {
+	  const result = {}
+	  const company_id = req.user.company
+	  const invoice = await Invoice.find({company:company_id})
+	  result.orders = {data:[],total:0}
+	  for(var inv of invoice){
+		const r = {}
+		const user = await User.findById(inv.user)
+		const book = await Book.findById(inv.book)
+		r.user = user
+		r.invoice = inv
+		result.orders.data.push(r)
+		result.orders.total += 1
+	  }
+	  return res.status(200).json(result)
+	} catch (error) {
+	  console.error(error.message)
+	  res.status(500).send('Server Error')
+	}
+})
+
+
+router.post('/removeAssignment/:id',auth,  async (req, res) => {
+	try {
+	  const result = {}
+	  const company_id = req.user.company
+	 const book_id = req.params.id
+	 const handler_id = req.body
+		
+		const book = await Book.findById(book_id)
+		if(!book){
+			return res.status(404).json({message:"Booking not found"})
+		}
+		result.booking = book
+		await Book.findByIdAndUpdate(
+			book_id,
+			{$unset:{handler:handler_id}},
+			{new:true}
+		)
+		await Handler.findByIdAndUpdate(
+			handler_id,
+			{$unset:{booking:book_id}},
+			{new:true}
+		)
+	  return res.status(200).json(result)
+	} catch (error) {
+	  console.error(error.message)
+	  res.status(500).send('Server Error')
+	}
+})
+
+
+router.post('/assignWorker/:id',auth,  async (req, res) => {
+	try {
+	  const result = {}
+	  const company_id = req.user.company
+	 const book_id = req.params.id
+	 const handler_id = req.body
+		
+		const book = await Book.findById(book_id)
+		if(!book){
+			return res.status(404).json({message:"Booking not found"})
+		}
+		result.booking = book
+		await Book.findByIdAndUpdate(
+			book_id,
+			{$set:{handler:handler_id}},
+			{new:true}
+		)
+		await Handler.findByIdAndUpdate(
+			handler_id,
+			{$set:{booking:book_id}},
+			{new:true}
+		)
+	  return res.status(200).json(result)
+	} catch (error) {
+	  console.error(error.message)
+	  res.status(500).send('Server Error')
+	}
+})
+
+router.post('/deleteWorker/:id',auth,  async (req, res) => {
+	try {
+	  const result = {}
+	  const company_id = req.user.company
+	  const worker_id = req.params.id
+	  const worker = await Handler.findById(worker_id)
+	  if(worker.company.toString() !== company_id){
+		return res.status(401).json({message:"Anaouthorised Request"})
+	  }
+	  await Handler.findByIdAndDelete(worker_id)
+	  result.message = "Worker Deleted"
+	  return res.status(200).json(result)
+	} catch (error) {
+	  console.error(error.message)
+	  res.status(500).send('Server Error')
+	}
+})
+
+router.post('/newWorker',auth,  async (req, res) => {
+	try {
+	  const result = {}
+	  const company_id = req.user.company
+	  const data = req.body
+	  console.log(data)
+	  if(!data.name || !data.password || !data.email){
+			return res.status(400).json({message:"Missing Data"})
+	  }
+	  const worker = new Handler(data)
+	  worker.company = company_id
+	  await worker.save()
+	  result.worker = worker
+	  return res.status(200).json(result)
+	} catch (error) {
+	  console.error(error.message)
+	  res.status(500).send('Server Error')
+	}
+})
+
+router.post('/getWorkers',auth,  async (req, res) => {
+	try {
+	  const result = {}
+	  const company_id = req.user.company
+	  const workers = await Handler.find({company:company_id}).select("-password")
+	  result.workers = []
+	  for(var wk of workers){
+		result.workers.push(wk)
+	  }
+	  return res.status(200).json(result)
+	} catch (error) {
+	  console.error(error.message)
+	  res.status(500).send('Server Error')
+	}
+})
+
+router.post('/recentOrders',auth,  async (req, res) => {
+	try {
+	  const result = {}
+	  const company_id = req.user.company
+	  var date = new Date()
+	  date = date.getTime()
+	  const bookings = await Book.find({company:company_id})
+	  result.bookings = []
+	  for(var book of bookings){
+		var bdt = new Date(book.date)
+		bdt = bdt.getTime()
+		const difference_ms = Math.abs(date - bdt);
+		console.log("date differnce",Math.floor(difference_ms / (1000 * 60 * 60 * 24)))
+		if(Math.floor(difference_ms / (1000 * 60 * 60 * 24)) < 7){
+			const user = await User.findById(book.user)
+			const invoice = await Invoice.findById(book.invoice)
+			const service = await Service.findById(book.service)
+			result.bookings.push({book:book,user:user,invoice:invoice,service:service})
+		}
+	  }
+	  return res.status(200).json(result)
+	} catch (error) {
+	  console.error(error.message)
+	  res.status(500).send('Server Error')
+	}
+})
+
+
 router.post('/bestSellers', auth, async (req, res) => {
 	try {
 	  const result = {}

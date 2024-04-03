@@ -34,9 +34,9 @@ function activeMethods(){
     `
 }
 
-export function shippingSettings(){
+export function shippingSettings(data){
     
-    return `
+    return document.getElementById("setting-tab").innerHTML = `
         <div class="card shadow">
             <div class="card-section border-b box-border">
                 <div class="flex justify-between card-section-header mb-1">
