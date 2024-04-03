@@ -17,6 +17,14 @@ const BookingSchema = mongoose.Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		ref:'service',
 	},
+	active:{
+		type: mongoose.Schema.Types.ObjectId,
+		ref:'active',
+	},
+	handler:{
+		type: mongoose.Schema.Types.ObjectId,
+		ref:'handler',
+	},
 	vehicle_year:{
 		type:String,
 	},

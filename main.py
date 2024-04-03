@@ -21,12 +21,15 @@ def dashboard():
         return redirect("login")
     orders = getBookings(user=session.get("user"),server=SERVER_NAME)
     user = getUser(user=session.get("user"),server=SERVER_NAME)
-    user = user.get("user")
-    print(orders)
+    user = user.get("user") if user.get("user") else {}
+    if user.get("_id") == None:
+        session["user"] = None
+        return redirect("login")
     return render_template("dashboard.html",**locals())
 
 @app.route("/checkout")
 def checkout():
+    user = getUser(server=SERVER_NAME,user=session.get("user"))
     return render_template("checkout.html",**locals())
 
 @app.route("/register",methods=['GET','POST'])
@@ -101,21 +104,25 @@ def book():
         
         service = request.args.get("id") 
         if session.get("user") == None:
-            email= request.form["email"]
-            phone = request.form['phone']
-            username = request.form['name']
-            password= "123456"
-            result = Register(username,password,email,phone,server=SERVER_NAME)
-            print(result)
-            if result == False:
-                msg = 'Error: An error occured, try again'
-                return render_template('book.html',**locals())
+            try:
+                email= request.form["email"]
+                phone = request.form['phone']
+                username = request.form['name']
+                password= "123456"
+                result = Register(username,password,email,phone,server=SERVER_NAME)
+                print(result)
+                if result == False:
+                    msg = 'Error: An error occured, try again'
+                    return render_template('book.html',**locals())
+                    
+                msg = result.get("message")
                 
-            msg = result.get("message")
-            
-            if result.get("token") == False:
+                if result.get("token") == False:
+                    return render_template("book.html",**locals())
+                session['user'] = result.get("token") 
+            except Exception as e:
+                msg = str(e)
                 return render_template("book.html",**locals())
-            session['user'] = result.get("token") 
         result = session.get("user")
         service_date = request.form["appointment-date"]
         service_time = request.form['time-frame']

@@ -43,11 +43,11 @@ function fetchWorkers(datas){
             </td>
             <td>
                 <div>
-                <a class="hover:underline font-semibold" href="#/admin/worker/edit?=1e2a1152-1e14-4ba9-b11e-de9d41a88a65">Bipin Yadav</a>
+                <a class="hover:underline font-semibold" href="#/admin/worker/edit?=${data._id}">${data.name}</a>
                 </div>
             </td>
            
-            <td><div><span>Mar 10, 2024</span></div></td>
+            <td><div><span>${data.date}</span></div></td>
             <td>
                 <div class="flex justify-center">
                     <span class="success dot" style="width:1.2rem;height:1.2rem"></span>
@@ -57,11 +57,14 @@ function fetchWorkers(datas){
         </tr>
         `
     }
+    return el
     
 }
 
+
+
 export function allWorker(){
-    fetchFunction("/api/models/admin/getWorkers",function(data){
+    fetchFunction("/api/models/admin/getWorkers",{},"post",function(data){
         console.log(data)
         document.getElementById("workersList").innerHTML = fetchWorkers(data)
     })

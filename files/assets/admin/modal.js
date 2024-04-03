@@ -27,13 +27,13 @@ export const addModal = (id)=>{
 
 export function editModal(id,titletext,children,settings=undefined){
 	
-	const body =document.getElementById("mpesaModal");
+	const body =document.getElementById(id);
 	
 	const title = body.getElementsByClassName("modal-title")
 	const el = body.getElementsByClassName("modal-body")
 	const footer = body.getElementsByClassName("modal-footer")[0]
 	title[0].innerHTML = titletext
-	el[0].innerHTML = children
+	el[0].innerHTML = children()
 	el[0].setAttribute("style","width:99%;margin: 0;padding: 0;")
 	if(settings !== undefined){
 		if(settings.footer !== undefined){
@@ -41,6 +41,7 @@ export function editModal(id,titletext,children,settings=undefined){
 			ft.setAttribute("type",settings.footer.type)
 			ft.setAttribute("onclick",settings.footer.onclick ? settings.footer.onclick : "close")
 			ft.innerText = settings.footer.text ? settings.footer.text : "next"
+			console.log(footer.children)
 			footer.appendChild(ft)
 		}
 	}

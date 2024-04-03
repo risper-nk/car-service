@@ -1,4 +1,4 @@
-export function customerDetails(){
+export function customerDetails(data){
     return `
     <div class="flex justify-between card-header">
         <h2 class="card-title">Customer</h2>
@@ -8,8 +8,8 @@ export function customerDetails(){
             <h3 class="card-session-title">Contact information</h3>
         </div>
         <div class="card-session-content pt-lg">
-            <div><a href="#" class="text-interactive hover:underline">tutti@gmail.com</a></div>
-            <div><span>4342345</span></div>
+            <div><a href="#" class="text-interactive hover:underline">${data.email}</a></div>
+            <div><span>${data.phone}</span></div>
         </div>
     </div>
     <div class="card-section border-b box-border">
@@ -17,8 +17,8 @@ export function customerDetails(){
             <h3 class="card-session-title">Contact information</h3>
         </div>
         <div class="card-session-content pt-lg">
-            <div><a href="#" class="text-interactive hover:underline">tutti@gmail.com</a></div>
-            <div><span>4342345</span></div>
+            <div><a href="#" class="text-interactive hover:underline">${data.email}</a></div>
+            <div><span>${data.phone}</span></div>
         </div>
     </div>
     <div class="card-section border-b box-border">

@@ -16,7 +16,9 @@ export function workerForm(){
             }
             console.log(payload)
             fetchFunction("/api/models/admin/newWorker",payload,"post",function(data){
+                console.log(data)
                 createAlert(data.message)
+                
             })
             return false
         })

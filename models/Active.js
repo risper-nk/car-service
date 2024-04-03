@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
 const activeSchema = mongoose.Schema({
-	parked:{
+	user:{
 		type: mongoose.Schema.Types.ObjectId,
-        ref: 'parked'
+        ref: 'user'
 	},
 	handler:{
 		type: mongoose.Schema.Types.ObjectId,
@@ -13,10 +13,14 @@ const activeSchema = mongoose.Schema({
 		type: mongoose.Schema.Types.ObjectId,
         ref: 'booking'
 	},
-    clockedin: {
-        type: Date,
-        required: true,
-    },
+    company:{
+		type: mongoose.Schema.Types.ObjectId,
+        ref: 'company'
+	},
+    tracking_number:{
+		type: String,
+        
+	},
 	clockedout: {
         type: Date,
     },

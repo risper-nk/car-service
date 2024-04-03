@@ -130,7 +130,7 @@ def getUser(user=None,server=None):
              'Content-Type': 'application/json',
                 'x-auth-token':user,
         }
-        response = requests.get(server+":8081/api/auth",headers=headers)
+        response = requests.post(server+":8081/api/auth/getUser",headers=headers)
         if response.status_code == 200:
             return response.json()
         return response.json()

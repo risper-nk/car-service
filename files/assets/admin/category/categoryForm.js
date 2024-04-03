@@ -28,7 +28,7 @@ export function categoryForm(data){
                 status: fom.getAll("category_status")[0],
                 
             };
-            if(data._id){
+            if(data !== undefined){
                 payload._id = data._id
                 payload.update = true
             }

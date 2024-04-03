@@ -573,7 +573,7 @@ All mechanic services are performed by highly qualified mechanics.</p>
 		<label class=" box-header margin-bottom-20 page-margin-top">SELECT SERVICES NEEDED</label>
 			{%for category in categories%}
 				<div class="cost-calculator-box cost-calculator-clearfix cost-calculator-float">
-					<input type="hidden" name="{{category['name']}}-label" value="{{category['price']}}"><input oncheck="costCalculator('${category['name']}')" id="{{category['_id']}}" class="cost-calculator-cost-slider-input type-checkbox cost-calculator-big" name="categories" type="checkbox" value="0" data-value="1">
+					<input type="hidden" name="{{category['name']}}-label" value="{{category['price']}}"><input oncheck="costCalculator({{category['name']}})" id="{{category['_id']}}" class="cost-calculator-cost-slider-input type-checkbox cost-calculator-big" name="categories" type="checkbox" value="0" data-value="1">
 				<label class="cost-calculator-checkbox-label" for="{{category['_id']}}"><span class="checkbox-box"></span>{{category['name']}}</label>
 					<input type="hidden" class="{{category['name']}}" name="{{category['name']}}-name" value="not checked" data-yes="checked" data-no="not checked">
 				</div>
@@ -666,16 +666,7 @@ All mechanic services are performed by highly qualified mechanics.</p>
 		})
 	</script>
 <script type="text/javascript" src="https://quanticalabs.com/wp_themes/carservice/wp-content/plugins/woocommerce/assets/js/js-cookie/js.cookie.min.js?ver=2.1.4-wc.7.6.0" id="js-cookie-js"></script>
-<script type="text/javascript" id="woocommerce-js-extra">
-/* <![CDATA[ */
-var woocommerce_params = {"ajax_url":"\/wp_themes\/carservice\/wp-admin\/admin-ajax.php","wc_ajax_url":"\/wp_themes\/carservice\/?wc-ajax=%%endpoint%%"};
-/* ]]> */
-</script>
-<script type="text/javascript" src="https://quanticalabs.com/wp_themes/carservice/wp-content/plugins/woocommerce/assets/js/frontend/woocommerce.min.js?ver=7.6.0" id="woocommerce-js"></script>
-<script type="text/javascript" id="wc-cart-fragments-js-extra">
-/* <![CDATA[ */
-var wc_cart_fragments_params = {"ajax_url":"\/wp_themes\/carservice\/wp-admin\/admin-ajax.php","wc_ajax_url":"\/wp_themes\/carservice\/?wc-ajax=%%endpoint%%","cart_hash_key":"wc_cart_hash_4257ae386855a1fad8dc4e9fa8ca0f6c","fragment_name":"wc_fragments_4257ae386855a1fad8dc4e9fa8ca0f6c","request_timeout":"5000"};
-/* ]]> */
+
 </script>
 <script type="text/javascript" src="https://quanticalabs.com/wp_themes/carservice/wp-content/plugins/woocommerce/assets/js/frontend/cart-fragments.min.js?ver=7.6.0" id="wc-cart-fragments-js"></script>
 <script type="text/javascript" src="https://quanticalabs.com/wp_themes/carservice/wp-includes/js/jquery/ui/core.min.js?ver=1.13.2" id="jquery-ui-core-js"></script>

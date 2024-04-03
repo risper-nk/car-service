@@ -24,6 +24,16 @@ router.get('/', auth, async (req, res) => {
   }
 })
 
+router.post('/getUser', auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select('-password');
+	
+    return res.status(200).json({ user:user })
+  } catch (error) {
+    console.error(error.message)
+    res.status(500).send('Server error')
+  }
+})
 //@route POST api/auth
 //@description Auth user & get token
 //@access Public

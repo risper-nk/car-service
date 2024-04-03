@@ -10,7 +10,7 @@ function fetchOrders(data){
     if(data === undefined){return ``}
     let el = ``
     for(var book of data.orders.data){
-        stet = "Processing" ? book.invoice.complete : "Pending"
+        let stet = "Processing" ? book.invoice.complete : "Pending"
         el += `
         <tr>
             <td>
@@ -26,7 +26,7 @@ function fetchOrders(data){
             </td>
             <td>
             <div>
-                <a class="hover:underline font-semibold" href="#/admin/order/edit?=${book.book._id}">#<!-- -->14737</a>
+                <a class="hover:underline font-semibold" href="#/admin/order/edit?${book.invoice._id}">#<!-- -->14737</a>
             </div>
             </td>
             <td>
@@ -40,8 +40,8 @@ function fetchOrders(data){
     
             </td>
             <td>
-                <span class="success badge"><span class="complete progress rounded-100"></span><span class="self-center title">${"Paid" ? data.invoice.complete : "Pending"}</span></span>
-                <div class="nodejscart-switch"><div><span>${"Yes" ? data.invoice.complete : "No"}</span></div></div>
+                <span class="success badge"><span class="complete progress rounded-100"></span><span class="self-center title">${"Paid" ? book.invoice.complete : "Pending"}</span></span>
+                <div class="nodejscart-switch"><div><span>${"Yes" ? book.invoice.complete : "No"}</span></div></div>
             </td>
             <td>$${book.invoice.amount}</td>
         </tr>

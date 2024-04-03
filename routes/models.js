@@ -120,22 +120,32 @@ router.post('/getBookings', auth, async (req, res) => {
 	for(var book of books){
 		const r = {}
 		r.book = book
+		var price = 0
+		for(var category_id of book.service_category){
+			if(category_id == ""){continue}
+			const category = await Category.findById(category_id)
+			price += category.price
+		}
 		if(!book.invoice){
 			const invoice = new Invoice()
 			invoice.booking = book._id
 			invoice.company = book.company
 			invoice.user = userid
-			var price = 0
-			for(var category_id of book.service_category){
-				if(category_id == ""){continue}
-				const category = await Category.findById(category_id)
-				price += category.price
-			}
+			
 			invoice.amount = price
 			await invoice.save()
 			r.invoice = invoice
 		}else{
 			const inv = await Invoice.findById(book.invoice)
+			
+			if(inv.amount !== price){
+				await Invoice.findByIdAndUpdate(
+					inv._id,
+					{$set:{amount:price}},
+					{new:true}
+				)
+				inv.amount = price
+			}
 			r.invoice = inv
 		}
 		
@@ -145,12 +155,15 @@ router.post('/getBookings', auth, async (req, res) => {
 		r.service= service
 		if(service){
 			data = []
+			var price = 0
 			for(var categ of service.category){
 				if(categ == ""){continue}
 				const category = await Category.findById(categ)
+				price += category.price ? category.price : 0
 				data.push(category)
 			}
 			r.categories = data
+			
 		}
 		
 		result.bookings.push(r)

@@ -17,6 +17,9 @@ import { allPage,newPage,editPage } from "./pages/page.js";
 import { allCustomer,newCustomer,editCustomer } from "./customer/customer.js";
 import {fetchFunction} from "./modules.js"
 import { newWorker,allWorker } from "./mechanic/worker.js";
+import { shipOrder } from "./order/orderDelivery.js";
+
+modules.shipOrder = shipOrder
 
 function setFetchData(res, urlPath,next){
    

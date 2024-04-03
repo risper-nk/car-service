@@ -59,6 +59,41 @@ router.post('/getCustomers',auth,  async (req, res) => {
 	}
 })
 
+router.post('/getOrder/:id',auth,  async (req, res) => {
+	try {
+	  const result = {}
+	  const company_id = req.user.company
+	  const order_id = req.params.id
+	  var invoice = await Invoice.findById(order_id)
+	  if(!invoice){
+			invoice = await Book.findById(order_id)
+			if(invoice){
+				invoice = invoice.invoice
+			}else{
+				return res.status(404).json({message:"Order not found"})
+			}
+	  }
+	  const book = await Book.findById(invoice.booking)
+	  const user = await User.findById(invoice.user).select("-password")
+	  let categories = []
+	  if(book){
+		for(var category of book.service_category){
+			if(category === ""){continue}
+			const catg = await Category.findById(category)
+			if(catg){categories.push(catg)}
+		}
+	  }
+	  result.book = book ? book : {}
+	  result.user = user ? user : {}
+	  result.invoice = invoice
+	  result.categories = categories
+	  return res.status(200).json(result)
+	} catch (error) {
+	  console.error(error.message)
+	  res.status(500).send('Server Error')
+	}
+})
+
 router.post('/getOrders',auth,  async (req, res) => {
 	try {
 	  const result = {}
@@ -68,9 +103,10 @@ router.post('/getOrders',auth,  async (req, res) => {
 	  for(var inv of invoice){
 		const r = {}
 		const user = await User.findById(inv.user)
-		const book = await Book.findById(inv.book)
+		const book = await Book.findById(inv.booking)
 		r.user = user
 		r.invoice = inv
+		r.book = book
 		result.orders.data.push(r)
 		result.orders.total += 1
 	  }
@@ -117,23 +153,27 @@ router.post('/assignWorker/:id',auth,  async (req, res) => {
 	  const result = {}
 	  const company_id = req.user.company
 	 const book_id = req.params.id
-	 const handler_id = req.body
+	 const {handler_id,tracking_number} = req.body
 		
 		const book = await Book.findById(book_id)
 		if(!book){
 			return res.status(404).json({message:"Booking not found"})
 		}
 		result.booking = book
+		const active = new Active()
+		active.company = company_id
+		active.handler = handler_id
+		active.user = book.user
+		active.booking = book._id
+		active.tracking_number = tracking_number
+		await active.save()
+		
 		await Book.findByIdAndUpdate(
 			book_id,
-			{$set:{handler:handler_id}},
+			{$set:{handler:handler_id,active:active._id}},
 			{new:true}
 		)
-		await Handler.findByIdAndUpdate(
-			handler_id,
-			{$set:{booking:book_id}},
-			{new:true}
-		)
+		result.active = active
 	  return res.status(200).json(result)
 	} catch (error) {
 	  console.error(error.message)
@@ -172,6 +212,7 @@ router.post('/newWorker',auth,  async (req, res) => {
 	  worker.company = company_id
 	  await worker.save()
 	  result.worker = worker
+	  result.message="New worker created"
 	  return res.status(200).json(result)
 	} catch (error) {
 	  console.error(error.message)
