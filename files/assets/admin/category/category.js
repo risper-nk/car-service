@@ -14,6 +14,26 @@ export function newCategory(){
     `
 }
 
+export function editCategory(data){
+    console.log(data)
+    if(data !== undefined && data !== null && data !== "null"){
+        fetchFunction("/api/models/admin/getCategory/"+data,{},"post",function(data){
+            return document.getElementById(id).innerHTML =`
+                <div class="main-content-inner">
+                    <div class="page-heading flex justify-between items-center"><div class="flex justify-start space-x-1 items-center"><a href="#/admin/categories" class="breadcrum-icon border block border-border rounded mr-075"><span class="flex items-center justify-center"><svg class="text-icon" viewBox="0 0 20 20" focusable="false" aria-hidden="true"><path d="M17 9H5.414l3.293-3.293a.999.999 0 1 0-1.414-1.414l-5 5a.999.999 0 0 0 0 1.414l5 5a.997.997 0 0 0 1.414 0 .999.999 0 0 0 0-1.414L5.414 11H17a1 1 0 1 0 0-2z"></path></svg></span></a>
+                        <div class="self-center"><h1 class="page-heading-title">Editing Category #${data.category._id}</h1></div></div>
+                    <div class="flex justify-end space-x-1 items-center"></div>
+                    </div>
+                    ${categoryForm(data.category)}
+                    
+                </div>
+                    
+            `
+        })
+    }
+    
+}
+
 export function allCategory(){
     fetchFunction("/api/models/admin/getCategories",{},"post",function(data){
         const body = document.getElementById("allCategories")
@@ -68,22 +88,28 @@ export function allCategory(){
     `
 }
 
-export function categoryInput(){
+export function categoryInput(data){
     setTimeout(function(){
         var coll = document.getElementById("collapsible");
         var i;
 
-        coll.addEventListener("click", function() {
+       $("#collapsible").click(function() {
             //this.classList.toggle("active");
-            var content = this.nextElementSibling;
-            if (content.style.display === "block") {
-            content.style.display = "none";
+            var content = $(this).next();
+            console.log("collasible",content)
+            if (content.css("display") === "block") {
+            content.css("display", "none");
             } else {
-            content.style.display = "block";
+            content.css("display", "block");
             }
         });
-        var category = document.getElementById("category_id")
+        var category = document.getElementById("category__id")
         category.value = ""
+        if(data !== undefined){
+            for(var i of data){
+                category.value += i +","
+            }
+        }
         var categs = document.getElementsByClassName("category_item");
         
         for (i = 0; i < categs.length; i++) {
@@ -126,6 +152,6 @@ export function categoryInput(){
     
     </div>
     <div class="absolute top-5 left-0 right-0 bg-[#eff2f5] z-50 border rounded border-[#c9cccf] p-[10px]"><div></div></div>
-    <input type="text" style="display:none;" id="category_id" name="category_id" >
+    <input type="text" style="display:none;" id="category__id" name="category_id" >
     `
 }

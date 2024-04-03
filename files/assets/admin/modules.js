@@ -27,6 +27,7 @@ export async function fetchFunction(apiUrl, payload, method,nextFunction,header)
   
   export function createAlert(data){
     console.log(data)
+    data = data.message ? data.message : data
     document.getElementById("Toastify").innerHTML += `
       
         <div id="" class="Toastify__toast Toastify__toast--success" style="animation-fill-mode: forwards; animation-duration: 750ms; transition: transform 0.2s ease 0s, opacity 0.2s ease 0s; transform: translateX(0px); opacity: 1;">

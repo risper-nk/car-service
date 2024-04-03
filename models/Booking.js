@@ -5,6 +5,18 @@ const BookingSchema = mongoose.Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		ref:'user',
 	},
+	company:{
+		type: mongoose.Schema.Types.ObjectId,
+		ref:'company',
+	},
+	invoice:{
+		type: mongoose.Schema.Types.ObjectId,
+		ref:'invoice',
+	},
+	service:{
+		type: mongoose.Schema.Types.ObjectId,
+		ref:'service',
+	},
 	vehicle_year:{
 		type:String,
 	},
@@ -17,7 +29,7 @@ const BookingSchema = mongoose.Schema({
 		default:[]
 	},
 	service_time:{
-		type:Date,
+		type:String,
 		
 	},
 	vehicle_make:{

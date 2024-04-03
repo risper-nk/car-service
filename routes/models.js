@@ -26,10 +26,16 @@ router.post('/book/:id',auth,  async (req, res) => {
 		result.message = "Service not available"
 		return res.status(404).json(result)
 	  }
-
+	  const booked = await Book.findOne({service:service_id,user:req.user.id})
+	  if(booked){
+		return res.status(400).json({message:"Service Already Booked"})
+	  }
 	  const company = await Company.findById(service.company)
 	  var price = 0
 		for(var category_id of data.service_category){
+			if(category_id == ""){
+				continue
+			}
 			const category = await Category.findById(category_id)
 			price += category.price
 		}
@@ -45,6 +51,7 @@ router.post('/book/:id',auth,  async (req, res) => {
 	  await book.save()
 	  await invoice.save()
 	  result.message = "Booking complete"
+	  result.book = book
 	  return res.status(200).json(result)
 	} catch (error) {
 	  console.error(error.message)
@@ -106,6 +113,8 @@ router.post('/getBookings', auth, async (req, res) => {
   try {
 	const userid = req.user.id
 	const result = {}
+	const user = await User.findById(userid).select("password")
+	result.user = user
     const books = await Book.find({user:userid})
 	result.bookings = []
 	for(var book of books){
@@ -118,22 +127,32 @@ router.post('/getBookings', auth, async (req, res) => {
 			invoice.user = userid
 			var price = 0
 			for(var category_id of book.service_category){
+				if(category_id == ""){continue}
 				const category = await Category.findById(category_id)
 				price += category.price
 			}
 			invoice.amount = price
 			await invoice.save()
+			r.invoice = invoice
+		}else{
+			const inv = await Invoice.findById(book.invoice)
+			r.invoice = inv
 		}
+		
 		const company = await Profile.findOne({company:book.company})
 		r.company = company
 		const service = await Service.findById(book.service)
 		r.service= service
-		data = []
-		for(var categ of service.category){
-			const category = await Categpry.findById(categ)
-			data.push(category)
+		if(service){
+			data = []
+			for(var categ of service.category){
+				if(categ == ""){continue}
+				const category = await Category.findById(categ)
+				data.push(category)
+			}
+			r.categories = data
 		}
-		r.service.category = data
+		
 		result.bookings.push(r)
 	}
     return res.status(200).json(result)

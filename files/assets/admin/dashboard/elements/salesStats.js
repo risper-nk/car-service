@@ -138,7 +138,7 @@ function bestSellers(data){
     let keys = data.data
     for(var s of data.categories){
         if(arr.length === 0){arr.push(keys[s._id]);categories.push(s)}
-        if(keys[s._id] > arr[arr.length-1]){
+        if(!categories.includes(s)){// arr[arr.length-1]
             let k = arr[arr.length-1]
             arr[arr.length-1] = keys[s._id]
             arr.push(k)
@@ -157,10 +157,10 @@ function bestSellers(data){
                 </div>
             </td>
             <td>
-                <a href="/admin/categories/edit?39c877ab-a50b-40a6-a14b-283284205eae" class="font-semibold hover:underline">${category.name}</a>
+                <a href="/admin/categories/edit?${category._id}" class="font-semibold hover:underline">${category.name}</a>
             </td>
             <td>$${category.price}</td>
-            <td>${arr[categories.indexOf(category)]} sold</td>
+            <td>${arr[categories.indexOf(category)]}</td>
         </tr>
         `
     }
@@ -179,7 +179,7 @@ function recentOrders(datas){
                 </div>
             </td>
             <td>
-                <a href="/admin/orders/edit?39c877ab-a50b-40a6-a14b-283284205eae" class="font-semibold hover:underline">${data.user.name}</a>
+                <a href="/admin/orders/edit?${data.invoice._id}" class="font-semibold hover:underline">${data.user.name}</a>
             </td>
             <td>$${data.invoice.amount}</td>
             <td>${data.service.name}</td>

@@ -1,5 +1,5 @@
 from flask import Flask,render_template, request, session, jsonify,redirect
-from db import Login,Register,getService,bookService,getVehicles,getCategories,getServices
+from db import Login,Register,getService,getUser,bookService,getVehicles,getCategories,getServices,getBookings
 import json
 from keys import Key
 import subprocess
@@ -19,7 +19,11 @@ def logout():
 def dashboard():
     if session.get("user") == None:
         return redirect("login")
-    return render_template("dashboard.html")
+    orders = getBookings(user=session.get("user"),server=SERVER_NAME)
+    user = getUser(user=session.get("user"),server=SERVER_NAME)
+    user = user.get("user")
+    print(orders)
+    return render_template("dashboard.html",**locals())
 
 @app.route("/checkout")
 def checkout():
@@ -116,28 +120,28 @@ def book():
         service_date = request.form["appointment-date"]
         service_time = request.form['time-frame']
         vehicle_mileage = request.form['vehicle-mileage']
-        vehicle_make = request.form['vehicle_make']
-        vehicle_year = request.form['vehicle_year']
+        vehicle_make = request.form['vehicle-make']
+        vehicle_year = request.form['vehicle-year']
         category = request.form["category_id"]
         category = category.split(',')
-        comments = request.form["comments"]
+        comments = request.form["message"]
         book = bookService(book_data ={
             'service_date':service_date,
             'service_time':service_time,
             'service_category':category,
             'comments':comments,
             'vehicle_mileage':vehicle_mileage,
-            'vehicle_make':vehcile_make,
-            'vehcile_year':vehcile_year,
+            'vehicle_make':vehicle_make,
+            'vehcile_year':vehicle_year,
         },id=service,user=session.get("user"),server=SERVER_NAME)
-        console.log(book)
-        if book.status_code != 200:
+        
+        if book.get("book") == None:
             msg = "Could not book, an error occured {}".format(book.message)
             return render_template("book.html",**locals())
         msg = "Booked Success"
     
         #route = "/dashboard"
-        return render_template("book.html",**locals())
+        return redirect("dashboard")
     msg = None
     return render_template("book.html",**locals())
 

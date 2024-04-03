@@ -62,16 +62,17 @@ def bookService(server=None,user=None,book_data=None,id=None):
     if server and user:
         headers = {
             'Content-Type': 'application/json',
-            'x-auth-token':session.get('user')
+            'x-auth-token':user,
         }
 
-        response = requests.post(server+":8081/api/models/user/Book",
+        response = requests.post(server+":8081/api/models/user/book/"+id,
             json=book_data,
             headers = headers
         )
+        
         if response.status_code == 200:
             return response.json()
-        return response.json()
+        return response
     return False
 
 def Login(username,password,server=None):
@@ -122,6 +123,31 @@ def getCategories(id=None,server=None,key=None):
         return categories
     else:
         return False
+    
+def getUser(user=None,server=None):
+    if user:
+        headers = {
+             'Content-Type': 'application/json',
+                'x-auth-token':user,
+        }
+        response = requests.get(server+":8081/api/auth",headers=headers)
+        if response.status_code == 200:
+            return response.json()
+        return response.json()
+    return {}
+
+def getBookings(user=None,server=None):
+    if user:
+        headers = {
+             'Content-Type': 'application/json',
+                'x-auth-token':user,
+        }
+        response = requests.post(server+":8081/api/models/user/getBookings",headers=headers)
+        #print(response)
+        if response.status_code == 200:
+            return response.json()
+        return response.json()
+    return []
 def getServices(server=None):
     db = myDB()
     response = requests.post(server+":8081/api/models/user/getServices",json={})

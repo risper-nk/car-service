@@ -3,31 +3,23 @@ import { categoryInput } from "../category/category.js";
 import {fetchFunction,createAlert} from "../modules.js"
 
 export function serviceForm(data){
+    console.log("service",data)
     let editor;
     const shipping_detail = {operator:undefined,price:undefined}
-<<<<<<< HEAD
-    /*setTimeout(function(){
-    
-        ClassicEditor
-=======
     setTimeout(function(){
-       /* ClassicEditor
->>>>>>> 18d71d494ef5311247276ab6d1df06bb2ed1d9b7
+        ClassicEditor
             .create( document.querySelector( '#editor' ) )
             .then( newEditor => {
                 
                 editor = newEditor;
                 if(data !== undefined){
-<<<<<<< HEAD
-                    editor.setData(data.description ? data.description : '')
-=======
                     editor.setData(data.description)
->>>>>>> 18d71d494ef5311247276ab6d1df06bb2ed1d9b7
+                    $('input[name="sevice_type"]').val(data.status ? data.status : "full");
                 }
             } )
             .catch( error => {
                 console.error( error );
-            } );*/
+            } );
         $("#ship_detail").click(function(e){
             if($(this).html().includes('plus')){
                
@@ -54,9 +46,11 @@ export function serviceForm(data){
             e.preventDefault()
             var myform = $("#serviceForm").serialize({ hash: true })
             let fom = new URLSearchParams(myform)
-            var categories = document.getElementById("category_id").value
+            var categories = document.getElementById("category__id").value
+            categories = categories.replace(",,",",")
             categories = categories.split(",")
             
+            console.log(categories)
             //email,password
             var payload = {
                 name: fom.getAll("service")[0],
@@ -72,15 +66,16 @@ export function serviceForm(data){
             };
             if(data !== undefined){
                 payload.id = data._id
+                payload.update = true
             }
             console.log(payload)
             fetchFunction("/api/models/admin/newService",payload,"post",function(data){
                 
-                createAlert(data)
+                createAlert(data.message)
             })
             return false;
         })
-    },999)*/
+    },999)
     return `
         <form id="serviceForm" action="#/api/services">
             <div class="grid grid-cols-1 gap-2">
@@ -92,13 +87,13 @@ export function serviceForm(data){
                                 <div class="form-field-container null">
                                     <label for="service">service name</label>
                                     <div class="field-wrapper flex flex-grow">
-                                        <input type="text" name="service" placeholder="Enter service code" value=${data ? data.service.name : ''}><div class="field-border"></div>
+                                        <input type="text" name="service" placeholder="Enter service code" value=${data ? data.name : ''}><div class="field-border"></div>
                                     </div>
                                 </div>
                                 <div class="form-field-container null">
                                     <label for="service">service url key</label>
                                     <div class="field-wrapper flex flex-grow">
-                                        <input type="text" name="key" placeholder="Enter service key service_name" value=${data ? data.service.key : ''}><div class="field-border"></div>
+                                        <input type="text" name="key" placeholder="Enter service key service_name" value=${data ? data.key : ''}><div class="field-border"></div>
                                     </div>
                                 </div>
                                 <div class="form-field-container null">
@@ -111,7 +106,7 @@ export function serviceForm(data){
                                     <div class="form-field-container null">
                                         <label for="discount_amount">Discount amount</label>
                                         <div class="field-wrapper flex flex-grow">
-                                            <input type="text" name="discount_amount" placeholder="Discount amount" value=${data? data.service.discount : ''}>
+                                            <input type="text" name="discount_amount" placeholder="Discount amount" value=${data? data.discount : ''}>
                                             <div class="field-border"></div>
                                         </div>
                                     </div>
@@ -234,7 +229,7 @@ export function serviceForm(data){
                                 <div class="items-center flex"><svg xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg></div>
                                 <div class="pl-1">
                                    
-                                    ${categoryInput()}
+                                    ${categoryInput(data ? data.categories : undefined)}
                                 </div>
                             </div>
                         </div>

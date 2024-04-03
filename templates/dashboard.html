@@ -298,10 +298,26 @@
     .MuiPaper-elevation24 {
       box-shadow: 0 0 1px 0 rgba(0,0,0,0.31), 0 24px 36px -8px rgba(0,0,0,0.25);
     }
+    .book-now{
+      position: absolute;
+      padding: 12px;
+      right: 5%;
+      top: 1%;
+      width: 132px;
+      cursor: pointer;
+      border-radius: 11px;
+      z-index: 99;
+      background-color: none;
+    }
+    .MuiTableRow-root{
+      margin-top: 12px;
+      border-radius: 12px;
+    }
     </style>
 
     <main>
         <div>
+          <button class="book-now" onclick="location.href='book'">BOOK NOW</button>
             <div class="MuiGrid-root jss245 MuiGrid-container MuiGrid-spacing-xs-2">
                 <div class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-1 MuiGrid-grid-lg-1 MuiGrid-grid-xl-1"></div>
             
@@ -323,49 +339,58 @@
                                         </tr>
                                     </thead>
                                     <tbody class="MuiTableBody-root">
+                                      {%for order in orders["bookings"]%}
                                         <tr class="MuiTableRow-root">
                                             <th class="MuiTableCell-root MuiTableCell-body" role="cell" scope="row">248345</th>
                                             <td class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft">
                                                 <div>
                                                     <span class="jss251">Product: </span>
-                                                    <span class="jss252">Service Name</span>
+                                                    <span class="jss252">{{order["service"]["name"]}}</span>
                                                 </div>
                                                 <div>
                                                     <span class="jss251">Category: </span>
-                                                    <span class="jss252">Individual</span>
+                                                    {%for category in order["categories"]%}
+                                                      <span class="jss252">{{category["name"] }} | <b>{{category["price"]}}</b></span>
+                                                    {%endfor%}
                                                 </div> 
                                                 <div>
                                                     <span class="jss251">Applicant: </span>
-                                                    <span class="jss252">BRADONE ETOLE OMWITSA</span>
+                                                    <span class="jss252">{{orders["user"]["name"]}}</span>
                                                 </div>
                                                 <div>
                                                     <span class="jss251">Submitted On: </span>
-                                                    <span class="jss252">November 22, 2022</span>
+                                                    <span class="jss252">{{order["book"]["date"]}}</span>
                                                 </div>
                                                 <div>
                                                     <span class="jss251">Feedback: </span>
+                                                    {%if order["book"]["complete"] == False%}
+                                                    <span class="jss252">Pending Apprroval</span>
+                                                    {%else%}
                                                     <span class="jss252">Approved for Service</span>
+                                                    {%endif%}
                                                 </div>
                                                 <div>
-                                                    <span class="jss251">Till Details: </span>
-                                                    <span class="jss252">Store: 6133240,  Msisdn: 254113457611 </span>
+                                                    <span class="jss251">Invoice Details: </span>
+                                                    <span class="jss252">Amount: {{order["invoice"]["amount"]}},  Msisdn: {{order["invoice"]["_id"]}} </span>
                                                 </div>
                                             </td>
                                             <td class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignCenter">
                                                 <div class="MuiStack-root css-j7qwjs">
                                                   <table>
                                                   <tbody>
+                                                    {%if order["invoice"]["complete"] == False%}
                                                     <td><span class="jss253">Pending</span></td>
                                                     <td><button onclick="location.href='/checkout?book=id'" class="MuiButtonBase-root MuiButton-root jss270 MuiButton-contained jss247 MuiButton-containedPrimary" tabindex="0" type="submit">
                                                       <span class="MuiButton-label">Pay now</span>
                                                       <span class="MuiTouchRipple-root"></span>
                                                   </button></td>
+                                                    {%endif%}
                                                     <td><button class="MuiButtonBase-root MuiButton-root jss270 MuiButton-contained jss247 MuiButton-containedPrimary" tabindex="0" type="submit">
                                                         <span class="MuiButton-label" data-target="#pickupModal" data-toggle="modal" onclick="getPickup()">Request Pickup</span>
                                                         <span class="MuiTouchRipple-root"></span>
                                                     </button></td>
                                                     <td><button class="MuiButtonBase-root MuiButton-root jss270 MuiButton-contained jss247 MuiButton-containedPrimary" tabindex="0" type="submit">
-                                                        <span class="MuiButton-label">Download Sticker</span>
+                                                        <span class="MuiButton-label">Delete Booking</span>
                                                         <span class="MuiTouchRipple-root"></span>
                                                     </button></td>
                                                   </tbody>
@@ -373,6 +398,7 @@
                                                 </div>
                                             </td>
                                         </tr>
+                                      {%endfor%}
                                     </tbody>
                                 </table>
                             </div>

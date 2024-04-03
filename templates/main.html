@@ -70,8 +70,8 @@
 					<img src="{{url_for('static',filename='assets/images/user/avatar.jpg')}}" alt="author-image">
 				</div>
 				<div class="dz-info">
-					<h5 class="name">John Doe</h5>
-					<span>example@gmail.com</span>
+					<h5 class="name">{{user.get("name")}}</h5>
+					<span>{{user.get("email")}}</span>
 				</div>
 			</a>
 			<ul class="nav navbar-nav">	

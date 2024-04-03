@@ -6,7 +6,7 @@ import {Session} from "./session.js"
 import { newProduct,allProducts} from "./product/products.js"
 import {newService,allServices,editService } from "./service/service.js"
 import { allAttribute,newAttribute } from "./attribute/attribute.js";
-import {newCategory,allCategory} from "./category/category.js"
+import {newCategory,allCategory,editCategory} from "./category/category.js"
 import {newCollection,allCollection} from "./collection/collection.js"
 import {editCollection} from "./collection/editCollection.js"
 import {editProduct} from "./product/editProduct.js"
@@ -78,8 +78,8 @@ function routesHandler(url){
         var fn = Routes[url]
         
         setFetchData({title:title.toUpperCase(),search:search},url,function(ed){
-           
-            try{eval(fn+`('${ed}')`)}catch(e){console.log(e);Dashboard(ed)}
+            console.log(ed)
+            try{eval(fn+`('${search}')`)}catch(e){console.log(e);Dashboard(ed)}
         })
     }else{
         setFetchData({title:title.toUpperCase(),search:search},url,Dashboard)

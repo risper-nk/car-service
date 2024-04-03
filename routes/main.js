@@ -201,14 +201,16 @@ router.post('/recentOrders',auth,  async (req, res) => {
 	  const company_id = req.user.company
 	  var date = new Date()
 	  date = date.getTime()
+	  
 	  const bookings = await Book.find({company:company_id})
 	  result.bookings = []
+	  
 	  for(var book of bookings){
 		var bdt = new Date(book.date)
 		bdt = bdt.getTime()
 		const difference_ms = Math.abs(date - bdt);
-		console.log("date differnce",Math.floor(difference_ms / (1000 * 60 * 60 * 24)))
-		if(Math.floor(difference_ms / (1000 * 60 * 60 * 24)) < 7){
+		//console.log("date differnce",Math.floor(difference_ms / (1000 * 60 * 60 * 24)))
+		if(difference_ms < 100000){
 			const user = await User.findById(book.user)
 			const invoice = await Invoice.findById(book.invoice)
 			const service = await Service.findById(book.service)
@@ -234,6 +236,12 @@ router.post('/bestSellers', auth, async (req, res) => {
 			
 			categories.push(i)
 		 }
+	  }
+	  if(categories.length === 0){
+		var categs = await Category.find({company:company_id})
+		for(var c of categs){
+			categories.push(c._id)
+		}
 	  }
 	  var data = {}
 	  var category_data = []
@@ -297,18 +305,22 @@ router.post('/newService',auth,  async (req, res) => {
 	try {
 	  const result = {}
 	  const data = req.body
+	  console.log(data.categories)
 	  if(!data.id){
 		const service = new Service(data)
 		service.company = req.user.company
 		await service.save()
 		result.message = "New Service created"
 	  }else{
-		await Service.findByIdAndUpdate(
-			data.id,
-			{ $set:data },
-			{ new: true },  
-		)
-		result.message = "Service Updated"
+		if(data.update === true){
+			await Service.findByIdAndUpdate(
+				data.id,
+				{ $set:data },
+				{ new: true },  
+			)
+			result.message = "Service Updated"
+		}
+		
 	  }
 	 
 	  
@@ -324,6 +336,14 @@ router.post('/newCategory',auth,  async (req, res) => {
 	  const result = {}
 	  result.message = "success"
 	  const data = req.body
+	  if(data._id && data.update === true){
+		await Category.findByIdAndUpdate(
+			data._id,
+			{$set:data},
+			{new:true},
+		)
+		return res.status(200).json(result)
+	  }
 	  const category = new Category(data)
 	  category.company = req.user.company
 	  await category.save()
@@ -348,6 +368,30 @@ router.post('/getCategories',auth,  async (req, res) => {
 	  res.status(500).send('Server Error')
 	}
 })
+
+router.post('/getCategory/:id',auth,  async (req, res) => {
+	try {
+	  const result = {}
+	  const company_id = req.user.company
+	  const category_id = req.params.id
+	  const category = await Category.findById(category_id)
+	  if(!category){
+		result.message = "Category not found"
+		return res.status(404).json(result)
+	  }
+	  if(category.company.toString() !== company_id){
+		result.message = "Anauthorised request"
+		return res.status(404).json(result)
+	  }
+	  result.category = category
+	  
+	  return res.status(200).json(result)
+	} catch (error) {
+	  console.error(error.message)
+	  res.status(500).send('Server Error')
+	}
+})
+
 
 router.post('/deleteCategory/:id',auth,  async (req, res) => {
 	try {

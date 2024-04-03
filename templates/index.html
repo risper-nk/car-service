@@ -526,9 +526,15 @@ div.cost-calculator-contact-box-submit-container .cost-calculator-column-with-re
 									<li id="menu-item" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-4 current_page_item current-menu-ancestor current-menu-parent current_page_parent current_page_ancestor menu-item-has-children menu-item-972">
 										<a href="/services"aria-current="page">Services</a>
 									</li>
+									{%if session.get("user") == None%}
 									<li id="menu-item" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-4 current_page_item current-menu-ancestor current-menu-parent current_page_parent current_page_ancestor menu-item-has-children menu-item-972">
 										<a href="/login"aria-current="page">Login</a>
 									</li>
+									{%else%}
+									<li id="menu-item" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-4 current_page_item current-menu-ancestor current-menu-parent current_page_parent current_page_ancestor menu-item-has-children menu-item-972">
+										<a href="/dashboard"aria-current="page">Dashboad</a>
+									</li>
+									{%endif%}
 								</ul>
 							</nav>
 						</div>
