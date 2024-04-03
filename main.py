@@ -57,14 +57,18 @@ def service():
         for c in services:
             if c["key"] == current_service:
                 current_service = c
+                
                 break
         categories = getCategories(id=current_service.get('_id'),server=SERVER_NAME)
+    
+        #return redirect("/services?service="+current_service["key"])
     return render_template("services.html",**locals())
 
 @app.route("/book",methods=['GET','POST'])
 def book():
-    if request.args.get('id') == None:
+    if request.args.get('id') == None or len(request.args.get('id')) < 2:
         return redirect('/services')
+    
     vehicles = getVehicles()
     categories = getCategories(id=request.args.get("id"),server=SERVER_NAME)
     msg = False

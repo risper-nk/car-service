@@ -5,13 +5,15 @@ import {fetchFunction,createAlert} from "../modules.js"
 export function serviceForm(data){
     let editor;
     const shipping_detail = {operator:undefined,price:undefined}
-    setTimeout(function(){
+    /*setTimeout(function(){
+    
         ClassicEditor
             .create( document.querySelector( '#editor' ) )
             .then( newEditor => {
+                
                 editor = newEditor;
-                if(data){
-                    editor.setData(data.description)
+                if(data !== undefined){
+                    editor.setData(data.description ? data.description : '')
                 }
             } )
             .catch( error => {
@@ -64,12 +66,12 @@ export function serviceForm(data){
             }
             console.log(payload)
             fetchFunction("/api/models/admin/newService",payload,"post",function(data){
-                console.log(data)
+                
                 createAlert(data)
             })
             return false;
         })
-    },999)
+    },999)*/
     return `
         <form id="serviceForm" action="#/api/services">
             <div class="grid grid-cols-1 gap-2">

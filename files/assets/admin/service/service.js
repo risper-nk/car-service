@@ -14,7 +14,7 @@ export function editService(search){
                         <div class="self-center"><h1 class="page-heading-title">Editing Service ${data.key}</h1></div></div>
                     <div class="flex justify-end space-x-1 items-center"></div>
                     </div>
-                    ${serviceForm(data)}
+                    ${serviceForm()}
                 </div>
             `
         })

@@ -10,6 +10,7 @@ export const Routes = {
     "/admin/pages":"allPage",
     "/admin/services":"allServices",
     "/admin/service/new":"newService",
+    "/admin/services/new":"newService",
     "/admin/services/edit":"editService",
     "/admin/categories":"allCategory",
     "/admin/categories/new":"newCategory",

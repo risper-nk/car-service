@@ -18,9 +18,9 @@ import { allCustomer,newCustomer,editCustomer } from "./customer/customer.js";
 import {fetchFunction} from "./modules.js"
 
 function setFetchData(res, urlPath,next){
-    console.log(res.search)
-    let srch = res.search
-     let html = next(srch);
+   
+    let srch = res.search ? res.search : undefined
+     let html = next();
      document.title = res.title;
      window.history.pushState({"html":html,"pageTitle":res.title},"", urlPath);
  }
