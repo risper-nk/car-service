@@ -59,6 +59,52 @@ router.post('/book/:id',auth,  async (req, res) => {
 	}
 })
 
+router.post('/getBook/:id',auth,  async (req, res) => {
+	try {
+	  const result = {}
+	  const data = req.body
+	  const book_id = req.params.id
+	  const book = await Book.findById(book_id)
+	  if(!book){
+		result.message = "Book not available"
+		return res.status(404).json(result)
+	  }
+	  if(book.user.toString() !== req.user.id){
+		result.message = "Anaouthorised access"
+		return res.status(401).jons(result)
+	  }
+	  const service = await Service.findById(book.service)
+	  result.service= service ? service : {name:"Not Available"}
+	  result.book = book
+	  if(!book.invoice){
+		var inv = new Invoice(book)
+		inv.booking = book._id
+		await inv.save()
+		book.invoice = inv._id
+	  }
+	  const invoice = await Invoice.findById(book.invoice)
+	  result.categories = []
+	  if(!invoice.amount || invoice.amount === ""){
+		var price = 0
+
+		for(var cat of book.service_category){
+			if(cat === ""){continue}
+			var category = await Category.findById(cat)
+			if(category){
+				price += category.price
+				result.categories.push(category)
+			}
+		}
+		invoice.amount = price
+	  }
+	  result.invoice = invoice
+	  return res.status(200).json(result)
+	} catch (error) {
+	  console.error(error.message)
+	  res.status(500).send('Server Error')
+	}
+})
+
 
 router.post('/deleteBook/:id',auth,  async (req, res) => {
 	try {

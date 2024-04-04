@@ -158,3 +158,26 @@ def getServices(server=None):
             services.append(x)
     print(services)
     return services
+
+def deleteBooking(server=None,user=None,book=None):
+    if user:
+        headers = {
+             'Content-Type': 'application/json',
+                'x-auth-token':user,
+        }
+        response = requests.post(server+":8081/api/models/user/deleteBook/"+book,headers=headers)
+        if response.status_code == 200:
+            return response.json()
+        return response.json()
+
+def getBooking(server=None,user=None,book=None):
+    if user:
+        headers = {
+             'Content-Type': 'application/json',
+                'x-auth-token':user,
+        }
+        response = requests.post(server+":8081/api/models/user/getBook/"+book,headers=headers)
+        if response.status_code == 200:
+            return response.json()
+        print(response)
+        return response.json()

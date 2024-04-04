@@ -1,5 +1,5 @@
 from flask import Flask,render_template, request, session, jsonify,redirect
-from db import Login,Register,getService,getUser,bookService,getVehicles,getCategories,getServices,getBookings
+from db import Login,Register,deleteBooking,getBooking,getService,getUser,bookService,getVehicles,getCategories,getServices,getBookings
 import json
 from keys import Key
 import subprocess
@@ -19,6 +19,16 @@ def logout():
 def dashboard():
     if session.get("user") == None:
         return redirect("login")
+    if request.args.get("book") and request.args.get("delete"):
+        book_id = request.args.get("book")
+        dl = deleteBooking(user=session.get("user"),server=SERVER_NAME,book=book_id)
+        msg = dl.get("message") if dl else "Incomplete"
+        print(msg)
+        return redirect("dashboard")
+    book = None
+    if request.args.get("book"):
+        book = getBooking(user=session.get("user"),book=request.args.get("book"),server=SERVER_NAME)
+        book = book if book else None
     orders = getBookings(user=session.get("user"),server=SERVER_NAME)
     user = getUser(user=session.get("user"),server=SERVER_NAME)
     user = user.get("user") if user.get("user") else {}
@@ -29,6 +39,8 @@ def dashboard():
 
 @app.route("/checkout")
 def checkout():
+    user = getUser(user=session.get("user"),server=SERVER_NAME)
+    user = user.get("user") if user.get("user") else {}
     user = getUser(server=SERVER_NAME,user=session.get("user"))
     return render_template("checkout.html",**locals())
 

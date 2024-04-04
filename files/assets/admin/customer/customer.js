@@ -11,7 +11,9 @@ export function editCustomer(){
 
 function fetchUsers(data){
     let el = ``
-    for(var user of data.customers.data){
+    console.log(data)
+    for(var us of data.customers.data){
+        var user = us.user
         el+= `
         <tr>
             <td>
@@ -27,7 +29,7 @@ function fetchUsers(data){
             </td>
             <td>
                 <div>
-                    <a class="hover:underline font-semibold" href="#/admin/customers/edit?=3f21ba44-7dc4-4580-8029-68e2c1f73e1e">${user.name}</a>
+                    <a class="hover:underline font-semibold" href="#/admin/customers/edit?${user._id}">${user.name}</a>
                 </div>
             </td>
            
@@ -41,6 +43,7 @@ function fetchUsers(data){
         </tr>
         `
     }
+    return el
     
 }
 

@@ -250,12 +250,17 @@ router.post('/recentOrders',auth,  async (req, res) => {
 		var bdt = new Date(book.date)
 		bdt = bdt.getTime()
 		const difference_ms = Math.abs(date - bdt);
+		const r = {}
 		//console.log("date differnce",Math.floor(difference_ms / (1000 * 60 * 60 * 24)))
-		if(difference_ms < 100000){
+		if(difference_ms){
 			const user = await User.findById(book.user)
 			const invoice = await Invoice.findById(book.invoice)
 			const service = await Service.findById(book.service)
-			result.bookings.push({book:book,user:user,invoice:invoice,service:service})
+			r.user = user
+			r.book= book
+			r.invoice = invoice
+			r.service = service ? service : {name: ""}
+			result.bookings.push(r)
 		}
 	  }
 	  return res.status(200).json(result)
@@ -274,7 +279,9 @@ router.post('/bestSellers', auth, async (req, res) => {
 	  var categories = []
 	  for(var book of books){
 		 for(var i of book.service_category){
-			
+			if(i == ""){
+				continue
+			}
 			categories.push(i)
 		 }
 	  }
@@ -328,6 +335,7 @@ router.post('/getAnalysis',auth,  async (req, res) => {
 			result.invoice.cancelled+=1
 		}
 		result.invoice.total += inv.amount
+		result.invoice.data.push(r)
 	  }
 	  result.services = services
 	  result.handlers = handler

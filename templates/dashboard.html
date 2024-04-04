@@ -330,6 +330,7 @@
                         </div>
                         <div class="MuiCardContent-root jss248">
                             <div class="MuiTableContainer-root">
+                                {%if book == None%}
                                 <table class="MuiTable-root jss249" aria-label="simple table">
                                     <thead class="MuiTableHead-root">
                                         <tr class="MuiTableRow-root MuiTableRow-head">
@@ -341,55 +342,27 @@
                                     <tbody class="MuiTableBody-root">
                                       {%for order in orders["bookings"]%}
                                         <tr class="MuiTableRow-root">
-                                            <th class="MuiTableCell-root MuiTableCell-body" role="cell" scope="row">248345</th>
-                                            <td class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft">
-                                                <div>
-                                                    <span class="jss251">Product: </span>
-                                                    <span class="jss252">{{order["service"]["name"]}}</span>
-                                                </div>
-                                                <div>
-                                                    <span class="jss251">Category: </span>
-                                                    {%for category in order["categories"]%}
-                                                      <span class="jss252">{{category["name"] }} | <b>{{category["price"]}}</b></span>
-                                                    {%endfor%}
-                                                </div> 
-                                                <div>
-                                                    <span class="jss251">Applicant: </span>
-                                                    <span class="jss252">{{orders["user"]["name"]}}</span>
-                                                </div>
-                                                <div>
-                                                    <span class="jss251">Submitted On: </span>
-                                                    <span class="jss252">{{order["book"]["date"]}}</span>
-                                                </div>
-                                                <div>
-                                                    <span class="jss251">Feedback: </span>
-                                                    {%if order["book"]["complete"] == False%}
-                                                    <span class="jss252">Pending Apprroval</span>
-                                                    {%else%}
-                                                    <span class="jss252">Approved for Service</span>
-                                                    {%endif%}
-                                                </div>
-                                                <div>
-                                                    <span class="jss251">Invoice Details: </span>
-                                                    <span class="jss252">Amount: {{order["invoice"]["amount"]}},  Msisdn: {{order["invoice"]["_id"]}} </span>
-                                                </div>
-                                            </td>
+                                            <th class="MuiTableCell-root MuiTableCell-body" role="cell" scope="row">{{order["book"]["_id"]}}</th>
+                                                
+                                            
                                             <td class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignCenter">
                                                 <div class="MuiStack-root css-j7qwjs">
                                                   <table>
                                                   <tbody>
                                                     {%if order["invoice"]["complete"] == False%}
-                                                    <td><span class="jss253">Pending</span></td>
-                                                    <td><button onclick="location.href='/checkout?book=id'" class="MuiButtonBase-root MuiButton-root jss270 MuiButton-contained jss247 MuiButton-containedPrimary" tabindex="0" type="submit">
+                                                    
+                                                    
+                                                    <td><button onclick="location.href='/checkout?invoice={{order["invoice"]["_id"]}}&pay=true''" class="MuiButtonBase-root MuiButton-root jss270 MuiButton-contained jss247 MuiButton-containedPrimary" tabindex="0" type="submit">
                                                       <span class="MuiButton-label">Pay now</span>
                                                       <span class="MuiTouchRipple-root"></span>
                                                   </button></td>
                                                     {%endif%}
                                                     <td><button class="MuiButtonBase-root MuiButton-root jss270 MuiButton-contained jss247 MuiButton-containedPrimary" tabindex="0" type="submit">
-                                                        <span class="MuiButton-label" data-target="#pickupModal" data-toggle="modal" onclick="getPickup()">Request Pickup</span>
+                                                        <span class="MuiButton-label" onclick='location.href="dashboard?book={{order['book']['_id']}}"'>Request Detail</span>
                                                         <span class="MuiTouchRipple-root"></span>
                                                     </button></td>
-                                                    <td><button class="MuiButtonBase-root MuiButton-root jss270 MuiButton-contained jss247 MuiButton-containedPrimary" tabindex="0" type="submit">
+                                                    <td><button onclick="location.search='book={{order["book"]["_id"]}}&delete=true'"
+                                                       class="MuiButtonBase-root MuiButton-root jss270 MuiButton-contained jss247 MuiButton-containedPrimary" tabindex="0" type="submit">
                                                         <span class="MuiButton-label">Delete Booking</span>
                                                         <span class="MuiTouchRipple-root"></span>
                                                     </button></td>
@@ -397,10 +370,54 @@
                                                   </table >
                                                 </div>
                                             </td>
-                                        </tr>
+                                            {%if order["invoice"]["complete"] == False%}
+                                            <td><span class="jss253">Pending</span></td>
+                                            {%else%}
+                                            <td><span class="jss253">Complete</span></td>
+                                            {%endif%}
+                                         </tr>
                                       {%endfor%}
                                     </tbody>
                                 </table>
+                              {%else%}
+                                  <div class="row">
+                                    <div>
+                                        <span class="jss251">Product: </span>
+                                        <span class="jss252">{{book["service"]["name"]}}</span>
+                                    </div>
+                                    <div>
+                                        <span class="jss251">Category: </span>
+                                        {%for category in book["categories"]%}
+                                          <span class="jss252">{{category["name"] }} | <b>{{category["price"]}}</b></span>
+                                        {%endfor%}
+                                    </div> 
+                                    <div>
+                                        <span class="jss251">Applicant: </span>
+                                        <span class="jss252">{{user.get("name")}}</span>
+                                    </div>
+                                    <div>
+                                        <span class="jss251">Submitted On: </span>
+                                        <span class="jss252">{{book["book"]["date"]}}</span>
+                                    </div>
+                                    <div>
+                                      <span class="jss251">Feedback: </span>
+                                      {%if book["book"]["complete"] == False%}
+                                      <span class="jss252">Pending Apprroval</span>
+                                      {%else%}
+                                      <span class="jss252">Approved for Service</span>
+                                      {%endif%}
+                                  </div>
+
+                                  <div>
+                                      <span class="jss251">Invoice Details: </span>
+                                      <span class="jss252">Amount: {{book["invoice"]["amount"]}},  Msisdn: {{book["invoice"]["_id"]}} </span>
+                                      
+                                  </div>
+                                  <div>
+                                    <span class="jss251"><a href="dashboard?book={{book['book']['_id']}}&delete=true">Delete</a></span>
+                                  </div>
+                                  </div>
+                              {%endif%}
                             </div>
                         </div>
                         
