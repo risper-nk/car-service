@@ -10,7 +10,7 @@ function fetchOrders(data){
     if(data === undefined){return ``}
     let el = ``
     for(var book of data.orders.data){
-        let stet = "Processing" ? book.invoice.complete : "Pending"
+        let stet =book.invoice.complete ? "Processing"  : "Pending"
         el += `
         <tr>
             <td>
@@ -26,12 +26,12 @@ function fetchOrders(data){
             </td>
             <td>
             <div>
-                <a class="hover:underline font-semibold" href="#/admin/order/edit?${book.invoice._id}">#<!-- -->14737</a>
+                <a class="hover:underline font-semibold" href="#/admin/order/edit?${book.invoice._id}">#<!-- -->${book.invoice._id}</a>
             </div>
             </td>
             <td>
                 <div class="">
-                    <span>${new Date(book.book.date)}</span>
+                    <span>${new Date(book.book.date ? book.book.date : '')}</span>
                 </div>
             </td>
             <td>${book.user.email}</td>
@@ -40,8 +40,8 @@ function fetchOrders(data){
     
             </td>
             <td>
-                <span class="success badge"><span class="complete progress rounded-100"></span><span class="self-center title">${"Paid" ? book.invoice.complete : "Pending"}</span></span>
-                <div class="nodejscart-switch"><div><span>${"Yes" ? book.invoice.complete : "No"}</span></div></div>
+                <span class="success badge"><span class="complete progress rounded-100"></span><span class="self-center title">${book.invoice.complete ? "Complete" : "Pending"}</span></span>
+                <div class="nodejscart-switch"><div><span>${book.invoice.complete ? "Complete"  : "Pending"}</span></div></div>
             </td>
             <td>$${book.invoice.amount}</td>
         </tr>

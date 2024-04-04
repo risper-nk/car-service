@@ -13,6 +13,36 @@ const Profile = require('../models/Profile')
 const Category = require("../models/Category")
 const Invoice = require("../models/Invoice")
 const Handler = require ("../models/Handler")
+const Checkout = require("../models/Checkout")
+
+router.post('/checkout/:id',auth,  async (req, res) => {
+	try {
+	  const result = {}
+	  const data = req.body
+	  const invoice_id = req.params.id
+	  const invoice = await Invoice.findById(invoice_id)
+	  if(!invoice){
+		return res.status(404).json({message: "Invoice not found"})
+	  }
+	  const checkout = new Checkout()
+	  checkout.description = data
+	  checkout.user = req.user.id
+	  checkout.invoice = invoice_id
+	  checkout.amount = invoice.amount
+	  await checkout.save()
+	  await Invoice.findByIdAndUpdate(
+		invoice._id,
+		{$set:{complete:true,due:new Date()}},
+		{new:true}
+	  )
+	  result.checkout = checkout
+	  result.message = "Checkout Successfull"
+	  return res.status(200).json(result)
+	} catch (error) {
+	  console.error(error.message)
+	  res.status(500).send('Server Error')
+	}
+})
 
 
 
@@ -59,6 +89,52 @@ router.post('/book/:id',auth,  async (req, res) => {
 	}
 })
 
+router.post('/getInvoice/:id',auth,  async (req, res) => {
+	try {
+	  const result = {}
+	  const data = req.body
+	  const book_id = req.params.id
+	  const invoice = await Invoice.findById(book_id)
+	  if(!invoice){
+		result.message = "Invoice not available"
+		return res.status(404).json(result)
+	  }
+	  const book = await Book.findById(invoice.booking)
+	  if(!book){
+		result.message = "No Booking found"
+		return res.status(404).jons(result)
+	  }
+	  if(invoice.user.toString() !== req.user.id){
+		result.message = "Anaouthorised access"
+		return res.status(401).jons(result)
+	  }
+	  const service = await Service.findById(book.service)
+	  result.service= service ? service : {name:"Not Available",discount:0}
+	  result.book = book
+	
+	
+	  result.categories = []
+	  if(!invoice.amount || invoice.amount === "" || invoice.amount === 0){
+		var price = 0
+
+		for(var cat of book.service_category){
+			if(cat === ""){continue}
+			var category = await Category.findById(cat)
+			if(category){
+				price += category.price
+				result.categories.push(category)
+			}
+		}
+		invoice.amount = price
+	  }
+	  result.invoice = invoice
+	  return res.status(200).json(result)
+	} catch (error) {
+	  console.error(error.message)
+	  res.status(500).send('Server Error')
+	}
+})
+
 router.post('/getBook/:id',auth,  async (req, res) => {
 	try {
 	  const result = {}
@@ -74,7 +150,7 @@ router.post('/getBook/:id',auth,  async (req, res) => {
 		return res.status(401).jons(result)
 	  }
 	  const service = await Service.findById(book.service)
-	  result.service= service ? service : {name:"Not Available"}
+	  result.service= service ? service : {name:"Not Available",discount:0}
 	  result.book = book
 	  if(!book.invoice){
 		var inv = new Invoice(book)
@@ -84,7 +160,7 @@ router.post('/getBook/:id',auth,  async (req, res) => {
 	  }
 	  const invoice = await Invoice.findById(book.invoice)
 	  result.categories = []
-	  if(!invoice.amount || invoice.amount === ""){
+	  if(!invoice.amount || invoice.amount === "" || invoice.amount === 0){
 		var price = 0
 
 		for(var cat of book.service_category){
