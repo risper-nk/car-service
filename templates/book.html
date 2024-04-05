@@ -573,12 +573,12 @@ All mechanic services are performed by highly qualified mechanics.</p>
 		<label class=" box-header margin-bottom-20 page-margin-top">SELECT SERVICES NEEDED</label>
 			{%for category in categories%}
 				<div class="cost-calculator-box cost-calculator-clearfix cost-calculator-float">
-					<input type="hidden" name="{{category['name']}}-label" value="{{category['price']}}"><input oncheck="costCalculator({{category['name']}})" id="{{category['_id']}}" class="cost-calculator-cost-slider-input type-checkbox cost-calculator-big" name="categories" type="checkbox" value="0" data-value="1">
+					<input type="hidden" name="{{category['name']}}-label" value="{{category['price']}}"><input oncheck="costCalculator('{{category["name"]}}')" id="{{category['_id']}}" class="cost-calculator-cost-slider-input type-checkbox cost-calculator-big" name="categories" type="checkbox" value="0" data-value="1">
 				<label class="cost-calculator-checkbox-label" for="{{category['_id']}}"><span class="checkbox-box"></span>{{category['name']}}</label>
 					<input type="hidden" class="{{category['name']}}" name="{{category['name']}}-name" value="not checked" data-yes="checked" data-no="not checked">
 				</div>
 			{%endfor%}
-			<input type="hiddem" name="category_id" id="category_id" >
+			<input type="hidden" name="category_id" id="category_id" >
 		</div></div></div><div class="wpb_column vc_column_container vc_col-sm-6"><div class="vc_column-inner "><div class="wpb_wrapper"><div class="vc_row wpb_row vc_inner cost-calculator-contact-box"><div class="vc_row wpb_row vc_inner"><label>CONTACT DETAILS</label></div><div class="vc_row wpb_row vc_inner cost-calculator-flex-box"><fieldset class="vc_col-sm-6 wpb_column vc_column_container">
 			<div class="cost-calculator-block">
 				
@@ -641,11 +641,11 @@ All mechanic services are performed by highly qualified mechanics.</p>
 			
 		}
 		$(document).ready(function(){
-			$("# -form").submit(function(e){
+			$("#appointment-form").submit(function(e){
 				e.preventDefault()
 				var formData = $(this).serialize();
 				console.log(formData)
-				return false;
+				return true;
 			})
 			$("input[name='categories']").click(function(){
 				var priceValue = $(this).prev().val();

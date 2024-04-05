@@ -37,7 +37,7 @@ router.post('/book/:id',auth,  async (req, res) => {
 				continue
 			}
 			const category = await Category.findById(category_id)
-			price += category.price
+			price += category.price ? category.price : 0
 		}
 	  const invoice = new Invoice() 
 	  const book = new Book(data)
@@ -48,6 +48,8 @@ router.post('/book/:id',auth,  async (req, res) => {
 	  invoice.user = req.user.id
 	  book.user = req.user.id
 	  book.company = company._id
+	  book.service = service_id
+	  book.description = service
 	  await book.save()
 	  await invoice.save()
 	  result.message = "Booking complete"

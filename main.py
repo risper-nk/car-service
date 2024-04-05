@@ -152,6 +152,7 @@ def book():
             'vehicle_mileage':vehicle_mileage,
             'vehicle_make':vehicle_make,
             'vehcile_year':vehicle_year,
+            'service':service,
         },id=service,user=session.get("user"),server=SERVER_NAME)
         
         if book.get("book") == None:

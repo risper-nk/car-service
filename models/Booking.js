@@ -40,6 +40,10 @@ const BookingSchema = mongoose.Schema({
 		type:String,
 		
 	},
+	description:{
+		type: mongoose.Schema.Types.Object,
+		default:{default:true}
+	},
 	vehicle_make:{
 		type:String,
 	},

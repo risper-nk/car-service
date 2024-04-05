@@ -136,7 +136,6 @@ router.post('/makeEntry',
     auth,
     [
 	  check('book', 'Booking is required').not().isEmpty(),
-	  check('clockin', 'Clock in Time is required').not().isEmpty(),
     ],
   ], async (req, res) => {
 	  const errors = validationResult(req)
@@ -149,7 +148,8 @@ router.post('/makeEntry',
 		}
 	try {
 		const handlerid = req.user.id
-		const {book,clockin} = req.body
+		const {book} = req.body
+		const clockin = new Date()
 			const handler = await Handler.findById(handlerid)
 			if(!handler){
 				return res.status(401).json({message:"Anauthorised request"})
@@ -179,7 +179,7 @@ router.post('/makeEntry',
 			activeFields.handler = handlerid
 			if(booking) activeFields.booking = booking._id
 			if(booking) activeFields.user = booking.user
-			if(booking) activeFields.spot = booking.spot
+			
 			if(booking) activeFields.vehicle = booking.vehicle
 			if(clockin) activeFields.clockedin = clockin
 			
@@ -188,13 +188,6 @@ router.post('/makeEntry',
 			active.booking = booking
 			await active.save()
 			if(active){
-				const spotFields = {}
-				spotFields.occupied = true
-				await Spot.findByIdAndUpdate(
-				  booking.spot,
-				  { $set: spotFields },
-				  { new: true },
-				)
 				await Book.findByIdAndUpdate(
 				  booking._id,
 				  { $set: {scanned:true} },
@@ -217,7 +210,7 @@ router.post('/makeExit',
     auth,
     [
 	  check('booking', 'Booking is required').not().isEmpty(),
-	  check('clockout', 'Clock out time is required').not().isEmpty(),
+	  
     ],
   ], async (req, res) => {
 	  const errors = validationResult(req)
