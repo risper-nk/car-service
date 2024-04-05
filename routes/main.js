@@ -104,6 +104,7 @@ router.post('/getOrders',auth,  async (req, res) => {
 		const r = {}
 		const user = await User.findById(inv.user)
 		const book = await Book.findById(inv.booking)
+		if(!book){continue}
 		r.user = user
 		r.invoice = inv
 		r.book = book
