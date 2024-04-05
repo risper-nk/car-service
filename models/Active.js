@@ -21,6 +21,10 @@ const activeSchema = mongoose.Schema({
 		type: String,
         
 	},
+	complete:{
+		type:Boolean,
+		default:false,
+	},
 	clockedout: {
         type: Date,
     },

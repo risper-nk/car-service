@@ -36,10 +36,19 @@ app.use('/api/models/user', require('./routes/models'))
 app.use('/api/models/request', require('./routes/requests'))
 app.use('/api/request', require('./routes/requests'))
 app.use('/api/models/admin', require('./routes/main'))
+app.use('/api/models/handler', require('./routes/handler2'))
 app.use('/api/models/admin2', require('./routes/admin2'))
 app.use('/api/transaction', require('./routes/transactions'))
 
 app.use(express.static(path.join(__dirname, 'files/')));
+
+app.get('/worker.html', (req, res) => {
+  res.sendFile(path.join(__dirname,'files/worker.html'));
+}) 
+
+app.get('/mechanic', (req, res) => {
+  res.sendFile(path.join(__dirname,'files/worker.html'));
+}) 
 
 app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname,'files/admin.html'));

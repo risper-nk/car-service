@@ -8,9 +8,9 @@ const auth = require('../middlewares/auth')
 const Active = require('../models/Active')
 const Notification = require('../models/Notification')
 const Handler = require('../models/Handler')
-const Spot = require('../models/Spot')
+
 const Company = require('../models/Company')
-const Parked = require('../models/Parked')
+const Service = require("../models/Service")
 const Book = require('../models/Booking')
 const Invoice = require('../models/Invoice')
 const Vehicle = require('../models/Vehicle')
@@ -20,7 +20,7 @@ const Vehicle = require('../models/Vehicle')
 //@description Get all checkins made by handler
 //@access Private
 
-router.get('/', auth, async (req, res) => {
+router.post('/getAssigned', auth, async (req, res) => {
   try {
 	const handlerid = req.user.id
 	const result = {}
@@ -30,8 +30,18 @@ router.get('/', auth, async (req, res) => {
     const actives  = await Active.find({handler:handlerid});
 	for(var active of actives){
 		const booking = await Book.findById(active.booking)
-		result.bookings.total += 1
-		result.bookings.data.push(booking)
+		
+		if(booking){
+			result.bookings.total += 1
+			if( booking.service){
+				var service = await Service.findById(booking.service)
+				service = service ? service : "Not Available"
+			}else{
+				var service = service ? service : "Not Available"
+			}
+			result.bookings.data.push({book:booking,active:active,service:service})
+		}
+		
 	}
 	result.handler = handler
 	result.active = actives
@@ -159,10 +169,12 @@ router.post('/makeEntry',
 				return res.status(404).json({message: "Booking not found" })
 			}
 			const location = await Service.findById(booking.service)
-			if(handler.company.toString() != location.company.toString()){
-				return res.status(401).json({message:"Anauthorised request, Request outside company"})
-			}
-			const actv = await Active.findOne({booking:booking._id})
+			if(location){
+				if(handler.company.toString() != location.company.toString()){
+					return res.status(401).json({message:"Anauthorised request, Request outside company"})
+				}
+			}	
+			const actv = await Active.findOne({booking:booking._id,complete:true})
 			if(actv){
 				return res.status(400).json({message:"Booking is Active"})
 			}
@@ -182,23 +194,31 @@ router.post('/makeEntry',
 			
 			if(booking) activeFields.vehicle = booking.vehicle
 			if(clockin) activeFields.clockedin = clockin
-			
-			const active = new Active(activeFields)
-			active.handler = req.user.id
-			active.booking = booking
-			await active.save()
-			if(active){
-				await Book.findByIdAndUpdate(
-				  booking._id,
-				  { $set: {scanned:true} },
-				  { new: true },
+			var fnd = await Active.findOne({booking:booking._id,complete:false})
+			var active = {}
+			if(fnd){
+				active = await Active.findByIdAndUpdate(
+					fnd._id,
+					{$set:{complete:true}},
+						{new:true}
 				)
-				return res.status(200).json(active)
+				active.message = "Updated Successfully"
+			}else{
+				active = new Active(activeFields)
+				active.handler = req.user.id
+				active.booking = booking._id		
+				active.company = handler.company	
+				active.message = "Success"
+				await active.save()
 			}
-		
-			return res.status(400).json({message: "Bad request" })
-		
-		
+			
+			await Book.findByIdAndUpdate(
+			  booking._id,
+			  { $set: {complete:true} },
+			  { new: true },
+			)
+			return res.status(200).json(active)
+			
   } catch (error) {
     console.error(error.message)
     res.status(500).send('Server Error')
@@ -271,8 +291,8 @@ router.post(
     const {name,password} = req.body
 	
     try { 
-      let user = await Handler.findOne({ name })
-	  
+      let user = await Handler.findOne({ name:name })
+	  console.log(user)
       if (!user) {
         return res.status(400).json({ message: 'Invalid Credentials' })
       }
@@ -281,7 +301,7 @@ router.post(
 	  
 
       if (!isMatch) {
-        return res.status(400).json({ message: 'Invalid Credentials' })
+        return res.status(400).json({ message: 'Invalid Credentials password' })
       }
 	  
 	  

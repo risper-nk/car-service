@@ -78,6 +78,7 @@ function lifetTimeSales(data){
             data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
           }]
           for(var dt of data.invoice.data){
+			 
             var date = new Date(dt.date)
             date = date.getMonth()
             if(dt.complete){
@@ -88,9 +89,11 @@ function lifetTimeSales(data){
           }
           $("#salesChart").html('')
           $("#salesGraph").html('')
+         // console.log(chartdata[0],chartdata[1],chartdata[2])
         chartFunction("salesChart",[data.invoice.total,data.invoice.cancelled])
         barChart("salesGraph",chartdata[0],chartdata[1],chartdata[2])
     },999)
+	 console.log(data.invoice.complete,data.invoice)
     return `
     <div class="col-span-1 grid grid-cols-1 gap-2 auto-rows-max">
         <div class="card shadow">

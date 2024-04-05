@@ -209,11 +209,50 @@ router.post('/newWorker',auth,  async (req, res) => {
 	  if(!data.name || !data.password || !data.email){
 			return res.status(400).json({message:"Missing Data"})
 	  }
+	  if(data.update === true && data.id){
+		  var fields = {}
+		  fields.name = data.name
+		  fields.email = data.email
+		  fields.status = data.status
+		  if (data.password){
+			const salt = await bcrypt.genSalt(10)
+			fields.password = await bcrypt.hash(data.password, salt)
+		  }
+		  await Handler.findByIdAndUpdate(
+			data.id,
+			{$set:fields},
+				{new:true}
+		  )
+		  return res.status(200).json({message:"Worker updated successfully"})
+	  }
 	  const worker = new Handler(data)
+	  if (data.password){
+		const salt = await bcrypt.genSalt(10)
+		worker.password = await bcrypt.hash(data.password, salt)
+	  }
 	  worker.company = company_id
 	  await worker.save()
 	  result.worker = worker
 	  result.message="New worker created"
+	  return res.status(200).json(result)
+	} catch (error) {
+	  console.error(error.message)
+	  res.status(500).send('Server Error')
+	}
+})
+
+router.post('/getWorker/:id',auth,  async (req, res) => {
+	try {
+	  const result = {}
+	  const company_id = req.user.company
+	  const workers = await Handler.findById(req.params.id).select("-password")
+	  result.worker = workers
+	  const active = await Active.find({handler:workers._id})
+	  result.active = []
+	  for(var a of active){
+		const book = await Book.findById(a.booking)
+		result.active.push({active: a,book:book})
+	  }
 	  return res.status(200).json(result)
 	} catch (error) {
 	  console.error(error.message)
