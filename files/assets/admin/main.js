@@ -100,3 +100,7 @@ if(session.get("token") ===false &&session.get("company")===false){
     }   
     
 }
+
+$(document).ready(function(){
+    
+})

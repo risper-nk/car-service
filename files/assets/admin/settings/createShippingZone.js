@@ -1,4 +1,5 @@
 export function createShippingZone(){
+	
     return `
     <form id="createShippingZone" action="#/api/shippingZones" method="POST">
         <div class="card-section border-b box-border">

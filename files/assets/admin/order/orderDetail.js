@@ -93,24 +93,24 @@ function orderActivity(data){
         <h3 class="title">Activities</h3>
         <ul>
             <li class="group">
-                <span>Mar 09</span>
+                <span>${data.invoice.due? new Date(data.invoice.due).toUTCString() :new Date(data.invoice.date).toUTCString()}</span>
                 <ul>
                     <li class="flex items-center">
                         <span class="dot"></span>
                         <div class="comment">
-                            ${data.invoice.complete === true ? `<span>Customer paid by using credit card. Transaction ID: ${data.invoice._id}</span>` : "Payment Pending"}
+                            ${data.invoice.complete === true ? `<span>Customer paid. Transaction ID: <a href="javascript:void(0)">${data.invoice._id}</a></span>` : "Payment Pending"}
                         </div>
-                        <span class="time">${data.invoice.date}</span>
+                        <span class="time">&nbsp ${data.invoice.due ? data.invoice.due.split("T")[1] :data.invoice.date.split("T")[1]}</span>
                     </li>
                 </ul>
             </li>
             <li class="group">
-                <span>${data.book.date}</span>
+                <span>${new Date(data.book.date).toUTCString()}</span>
                 <ul>
                     <li class="flex items-center">
                         <span class="dot"></span>
                         <div class="comment"><span>Order created</span></div>
-                        <span class="time">${new Date(data.date).toUTCString()}</span>
+                        <span class="time">&nbsp ${data.book.date.split("T")[1]}</span>
                     </li>
                 </ul>
             </li>
@@ -210,7 +210,7 @@ function orderInvoice(data){
                 </div>
 				
                 <div class="self-center">
-                    <span>KES ${data.invoice.complete === true ? data.invoice.amount : 0}</span>
+                    <span>KES ${data.complete === true ? data.amount : 0}</span>
                 </div>
             </div>
         </div>

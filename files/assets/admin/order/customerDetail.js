@@ -27,12 +27,12 @@ export function customerDetails(data){
         </div>
         <div class="card-session-content pt-lg">
             <div class="address__summary">
-                <div class="full-name">Tutti</div>
+                <div class="full-name">N/A</div>
                 <div class="address-one">adaf,ada.c</div>
                 <div class="city-province-postcode">
-                    <div>12345, IL</div>
-                    <div><span>Kentucky<!-- -->, </span> <span>United States</span></div>
-                </div><div class="telephone">4342345</div>
+                    <div>N/A</div>
+                    <div><span>N/A<!-- -->, </span> <span>KENYA</span></div>
+                </div><div class="telephone">${data.phone}</div>
             </div>
         </div>
     </div>
@@ -42,14 +42,12 @@ export function customerDetails(data){
         </div>
         <div class="card-session-content pt-lg">
             <div class="address__summary">
-                <div class="full-name">Tutti</div>
+                <div class="full-name">N/A</div>
                 <div class="address-one">adaf,ada.c</div>
                 <div class="city-province-postcode">
-                    <div>12345, IL</div><div><span>Kentucky<!-- -->, </span> 
-                        <span>United States</span>
-                    </div>
-                </div>
-                <div class="telephone">4342345</div>
+                    <div>N/A</div>
+                    <div><span>N/A<!-- -->, </span> <span>KENYA</span></div>
+                </div><div class="telephone">${data.phone}</div>
             </div>
         </div>
     </div>`

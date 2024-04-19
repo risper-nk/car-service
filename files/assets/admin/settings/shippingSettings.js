@@ -5,9 +5,10 @@ document.getElementsByTagName("body")[0].innerHTML += addModal("shipModal")
 
 
 function newShipping(){
-	var html = createShippingZone()
-	editModal("shipModal","New Shipping",html,settings=undefined)
+	var html = createShippingZone
+	editModal("shipModal","New Shipping",html,undefined)
 }
+modules.newShipping = newShipping
 
 function activeMethods(){
     return `
@@ -35,7 +36,7 @@ function activeMethods(){
 }
 
 export function shippingSettings(data){
-    
+    console.log(data)
     return document.getElementById("setting-tab").innerHTML = `
         <div class="card shadow">
             <div class="card-section border-b box-border">
@@ -84,7 +85,7 @@ export function shippingSettings(data){
             </div>
             <div class="card-section border-b box-border">
                 <div class="card-session-content pt-lg">
-                    <div><button type="button" class="button primary" data-toggle="modal" id="newShipping" data-target="#shipModal" onclick="newShipping()">
+                    <div><button type="button" class="button primary" data-toggle="modal" id="newShipping" data-target="#shipModal" onclick="modules.newShipping()">
                         <span>Create new shipping zone</span>
                     </button>
                 </div>
@@ -93,6 +94,6 @@ export function shippingSettings(data){
         </div>
     `
     $("#newShipping").click(function(){
-        newShipping()
+        modules.newShipping()
     })
 }

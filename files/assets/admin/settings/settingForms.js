@@ -38,14 +38,14 @@ function storeSettings(data){
                     <div class="form-field-container null">
                         <label for="storeName">Store Name</label>
                         <div class="field-wrapper flex flex-grow">
-                            <input type="text" name="storeName" placeholder="Store Name" value="Charka Nurture">
+                            <input type="text" name="storeName" placeholder="Store Name" value=${data ? data.company.name :"My Store"} >
                             <div class="field-border"></div>
                         </div>
                     </div>
                     <div class="form-field-container null">
                         <label for="storeDescription">Store Description</label>
                         <div class="field-wrapper flex flex-grow">
-                            <textarea type="text" class="form-field" id="storeDescription" name="storeDescription" placeholder="Store Description">An Amazing EverShop Store</textarea>
+                            <textarea type="text" class="form-field" id="storeDescription" name="storeDescription" placeholder="Store Description">${data ? data.company.description:"My description"}</textarea>
                             <div class="field-border"></div>
                         </div>
                     </div>
@@ -61,7 +61,7 @@ function storeSettings(data){
                             <div class="form-field-container null">
                                 <label for="storePhoneNumber">Store Phone Number</label>
                                 <div class="field-wrapper flex flex-grow">
-                                    <input type="text" name="storePhoneNumber" placeholder="Store Phone Number" value="">
+                                    <input type="text" name="storePhoneNumber" placeholder="Store Phone Number" value=${data ? data.company.phone : ""}>
                                     <div class="field-border"></div>
                                 </div>
                             </div>
@@ -70,7 +70,7 @@ function storeSettings(data){
                             <div class="form-field-container null">
                                 <label for="storeEmail">Store Email</label>
                                 <div class="field-wrapper flex flex-grow">
-                                    <input type="text" name="storeEmail" placeholder="Store Email" value="">
+                                    <input type="text" name="storeEmail" placeholder="Store Email" value=${data ? data.company.email : ""}>
                                     <div class="field-border"></div>
                                 </div>
                             </div>
@@ -89,7 +89,7 @@ function storeSettings(data){
                             <div class="field-wrapper flex flex-grow items-baseline">
                                 <select class="form-field" id="storeCountry" name="storeCountry" placeholder="Country">
                                     <option value="" disabled="">Country</option>
-                                    <option value="ZM">Zambia</option><option value="ZW">Zimbabwe</option><option value="AX">Åland Islands</option>
+                                    
                                 </select>
                                 <div class="field-border"></div>
                                 <div class="field-suffix">
@@ -101,7 +101,7 @@ function storeSettings(data){
                     <div class="form-field-container null">
                         <label for="storeAddress">Address</label>
                         <div class="field-wrapper flex flex-grow">
-                            <input type="text" name="storeAddress" placeholder="Store Address" value="">
+                            <input type="text" name="storeAddress" placeholder="Store Address" value=${data ? data.company.address:""}>
                             <div class="field-border"></div>
                         </div>
                     </div>
@@ -110,32 +110,17 @@ function storeSettings(data){
                             <div class="form-field-container null">
                                 <label for="storeCity">City</label>
                                 <div class="field-wrapper flex flex-grow">
-                                    <input type="text" name="storeCity" placeholder="City" value="">
+                                    <input type="text" name="storeCity" placeholder="City" value=${data ? data.company.state:""}>
                                     <div class="field-border"></div>
                                 </div>
                             </div>
                         </div>
-                        <div>
-                            <div class="form-field-container dropdown null">
-                                <label for="storeProvince">Province</label>
-                                <div class="field-wrapper flex flex-grow items-baseline">
-                                    <select class="form-field" id="storeProvince" name="storeProvince" placeholder="Province">
-                                        <option value="" disabled="">Province</option>
-                                        <option value="IN-AN">Andaman and Nicobar Islands</option>
-                                        <option value="IN-WB">West Bengal</option>
-                                    </select>
-                                    <div class="field-border"></div>
-                                    <div class="field-suffix">
-                                        <svg viewBox="0 0 20 20" width="1rem" height="1.25rem" focusable="false" aria-hidden="true"><path d="m10 16-4-4h8l-4 4zm0-12 4 4H6l4-4z"></path></svg>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        
                         <div>
                             <div class="form-field-container null">
                                 <label for="storePostalCode">PostalCode</label>
                                 <div class="field-wrapper flex flex-grow">
-                                    <input type="text" name="storePostalCode" placeholder="PostalCode" value="">
+                                    <input type="text" name="storePostalCode" placeholder="PostalCode" value=${data ? data.company.code:""}>
                                     <div class="field-border"></div>
                                 </div>
                             </div>

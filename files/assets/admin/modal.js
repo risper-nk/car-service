@@ -25,7 +25,7 @@ export const addModal = (id)=>{
 
 
 
-export function editModal(id,titletext,children,settings=undefined){
+export function editModal(id,titletext,children,settings){
 	
 	const body =document.getElementById(id);
 	

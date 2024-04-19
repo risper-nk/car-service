@@ -31,24 +31,24 @@ const companySchema = mongoose.Schema({
     },
 	phone: {
         type: Number,
-       
+       default:null,
     },
 	
 	address: {
         type: String, 
-		
+		default:null,
     },
 	country: {
         type: String, 
-		
+		default:null,
     },
 	state: {
         type: String, 
-		
+		default:null,
     },
 	code: {
         type: String, 
-		
+		default:null,
     },
 	
     password: {
