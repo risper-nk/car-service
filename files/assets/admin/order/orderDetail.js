@@ -64,7 +64,7 @@ export function editOrder(_id){
                         <div class="card shadow">
                             ${orderInvoice(data.invoice)}
                         </div>
-                        ${orderActivity(data.invoice)}
+                        ${orderActivity(data)}
                     </div>
                     <div class="col-span-2 grid grid-cols-1 gap-2 auto-rows-max">
                         <div class="card shadow">
@@ -98,19 +98,19 @@ function orderActivity(data){
                     <li class="flex items-center">
                         <span class="dot"></span>
                         <div class="comment">
-                            <span>Customer paid by using credit card. Transaction ID: pi_3OsZ4lEvEMCuLU1x1ZoEZwDy</span>
+                            ${data.invoice.complete === true ? `<span>Customer paid by using credit card. Transaction ID: ${data.invoice._id}</span>` : "Payment Pending"}
                         </div>
-                        <span class="time">11:13 PM</span>
+                        <span class="time">${data.invoice.date}</span>
                     </li>
                 </ul>
             </li>
             <li class="group">
-                <span>1710025991229</span>
+                <span>${data.book.date}</span>
                 <ul>
                     <li class="flex items-center">
                         <span class="dot"></span>
                         <div class="comment"><span>Order created</span></div>
-                        <span class="time">11:13 PM</span>
+                        <span class="time">${new Date(data.date).toUTCString()}</span>
                     </li>
                 </ul>
             </li>
@@ -169,7 +169,7 @@ function orderItems(datas){
                             <span>$708.00</span>
                         </td>
                     </tr>
-                    <tr><td><div class="product-thumbnail"><div class="thumbnail"><img src="/assets/catalog/2763/7203/plv4117-Blue-thumb.png" alt=""></div><span class="qty">1</span></div></td><td><div class="product-column"><div><span class="font-semibold"><a href="/admin/products/edit/76216f3d-d503-475b-b43f-aaa10076bc38">Hacked fashion chuck taylor all star</a></span></div><div class="text-sm text-gray-500"><span class="font-semibold">SKU: </span><span>NJC15709-Blue-S</span></div><div class="cart-item-variant-options mt-05"><ul><li><span class="attribute-name font-semibold">Color<!-- -->:<!-- --> </span><span>Blue</span></li><li><span class="attribute-name font-semibold">Size<!-- -->:<!-- --> </span><span>S</span></li></ul></div></div></td><td><div class="product-price"><span>$802.00<!-- --> x <!-- -->1</span></div></td><td><span>$802.00</span></td></tr>
+                    
                 </tbody>
             </table>
         </div>`
@@ -218,8 +218,9 @@ function orderInvoice(data){
                 <div class="self-center">
                     <span>Paid by customer</span>
                 </div>
+				
                 <div class="self-center">
-                    <span>$0</span>
+                    <span>KES ${data.invoice.complete === true ? data.invoice.amount : 0}</span>
                 </div>
             </div>
         </div>
