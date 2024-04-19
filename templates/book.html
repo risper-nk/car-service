@@ -641,12 +641,7 @@ All mechanic services are performed by highly qualified mechanics.</p>
 			
 		}
 		$(document).ready(function(){
-			$("#appointment-form").submit(function(e){
-				e.preventDefault()
-				var formData = $(this).serialize();
-				console.log(formData)
-				return true;
-			})
+			
 			$("input[name='categories']").click(function(){
 				var priceValue = $(this).prev().val();
 				console.log($(this).attr('id'),$(this).prop('checked'))

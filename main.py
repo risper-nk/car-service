@@ -29,6 +29,7 @@ def dashboard():
     if request.args.get("book"):
         book = getBooking(user=session.get("user"),book=request.args.get("book"),server=SERVER_NAME)
         book = book if book else None
+        
     orders = getBookings(user=session.get("user"),server=SERVER_NAME)
     user = getUser(user=session.get("user"),server=SERVER_NAME)
     user = user.get("user") if user.get("user") else {}

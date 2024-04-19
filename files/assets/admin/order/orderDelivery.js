@@ -24,7 +24,10 @@ export function activateForm(id){
     
     fetchFunction("/api/models/admin/assignWorker/"+id,payload,"post",function(data){
         console.log(data)
-        createAlert(data.message)
+        if(data.message){
+            createAlert(data.message)
+        }
+        
     })
     return false
    

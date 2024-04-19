@@ -15,7 +15,7 @@ export function editOrder(_id){
                     <span>Assign Mechanic</span>
                 </button>`
         if(data.book.handler){
-            stet = `<span>Assigned to </span> <a href="javascript:void(0)">${data.book.handler}</a>`
+            stet = `<span>Assigned to </span> <a href="#/admin/worker/edit?${data.book.handler}">${data.book.handler}</a>`
         }
         return document.getElementById(id).innerHTML = `
             <div class="main-content-inner">
@@ -123,58 +123,49 @@ function orderItems(datas){
     let el = ``
     for(var data of datas){
         el += `
+            <tr>
+                <td>
+                    <div class="product-thumbnail">
+                        <div class="thumbnail">
+                            <img src="" alt="">
+                        </div>
+                        <span class="qty">1</span>
+                    </div>
+                </td>
+                <td>
+                    <div class="product-column">
+                        <div>
+                            <span class="font-semibold">
+                                <a href="#/admin/categories/edit/?${data._id}">${data.name}</a>
+                            </span>
+                        </div>
+                        
+                    
+                    </div>
+                </td>
+                <td>
+                    <div class="product-price">
+                        <span>${data.price}<!-- --> x <!-- -->1</span>
+                    </div>
+                </td>
+                <td>
+                    <span>${data.price}</span>
+                </td>
+            </tr>
+           
+        `
+    }
+    return `
         <div class="card-session-content pt-lg">
             <table class="listing order-items">
-                <tbody>
-                    <tr>
-                        <td>
-                            <div class="product-thumbnail">
-                                <div class="thumbnail">
-                                    <img src="/assets/catalog/1009/4805/plv3206-Blue-thumb.png" alt="">
-                                </div>
-                                <span class="qty">1</span>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="product-column">
-                                <div>
-                                    <span class="font-semibold">
-                                        <a href="#/admin/products/edit/2607e074-bb8e-4524-82c4-bb033e46576b">Alphaboost shoes</a>
-                                    </span>
-                                </div>
-                                <div class="text-sm text-gray-500">
-                                    <span class="font-semibold">SKU: </span>
-                                    <span>NJC51430-Blue-L</span>
-                                </div>
-                                <div class="cart-item-variant-options mt-05">
-                                    <ul>
-                                        <li>
-                                            <span class="attribute-name font-semibold">Size<!-- -->:<!-- --> </span>
-                                            <span>L</span>
-                                        </li>
-                                        <li>
-                                            <span class="attribute-name font-semibold">Color<!-- -->:<!-- --> </span>
-                                            <span>Blue</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="product-price">
-                                <span>$708.00<!-- --> x <!-- -->1</span>
-                            </div>
-                        </td>
-                        <td>
-                            <span>$708.00</span>
-                        </td>
-                    </tr>
-                    <tr><td><div class="product-thumbnail"><div class="thumbnail"><img src="/assets/catalog/2763/7203/plv4117-Blue-thumb.png" alt=""></div><span class="qty">1</span></div></td><td><div class="product-column"><div><span class="font-semibold"><a href="/admin/products/edit/76216f3d-d503-475b-b43f-aaa10076bc38">Hacked fashion chuck taylor all star</a></span></div><div class="text-sm text-gray-500"><span class="font-semibold">SKU: </span><span>NJC15709-Blue-S</span></div><div class="cart-item-variant-options mt-05"><ul><li><span class="attribute-name font-semibold">Color<!-- -->:<!-- --> </span><span>Blue</span></li><li><span class="attribute-name font-semibold">Size<!-- -->:<!-- --> </span><span>S</span></li></ul></div></div></td><td><div class="product-price"><span>$802.00<!-- --> x <!-- -->1</span></div></td><td><span>$802.00</span></td></tr>
+                <tbody id="listingOrders">
+                    ${el}
+                    
                 </tbody>
             </table>
         </div>`
-    }
-    return el
+    
+   // return el
 }
 
 function orderInvoice(data){

@@ -46,6 +46,7 @@ function fetchWorkers(datas){
                             <span class="checkbox-unchecked"></span><span class="pl-05"></span>
                             <input type="hidden" value="0">
                         </label>
+                        <a href="#/admin/worker/edit?${data._id}">${data._id}</a>
                     </div>
                 </div>
             </td>
