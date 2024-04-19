@@ -95,7 +95,7 @@ function handlerDashboard(datas,type){
                 <h4 class="card-title mb-0">${data.service.name ? data.service.name : "N/A"}</h4>
                 </div>
                 <div class="card-body">
-                <p class="card-text">${data.service.description ? data.service.description : "Description"}</p>
+                <p class="card-text">${data.service.discount ? data.service.discount : "0"} Discount</p>
                 <div class="mt-2">
                 <span class="avatar" data-toggle="tooltip" data-placement="top" title="Richard Wilson"><img src="assets/img/profiles/img-10.jpg" alt="Richard Wilson" class="img-fluid"></span>
                 <a href="#activate" class="btn btn-theme button-1 ctm-border-radius text-white float-right text-white" onclick="activateBook('${data.book._id}',this)">${data.active.complete ?'Mark as Complete': 'Completed' }</a>

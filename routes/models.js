@@ -162,8 +162,7 @@ router.post('/getBook/:id',auth,  async (req, res) => {
 	  }
 	  const invoice = await Invoice.findById(book.invoice)
 	  result.categories = []
-	  if(!invoice.amount || invoice.amount === "" || invoice.amount === 0){
-		var price = 0
+	  var price = 0
 
 		for(var cat of book.service_category){
 			if(cat === ""){continue}
@@ -173,6 +172,8 @@ router.post('/getBook/:id',auth,  async (req, res) => {
 				result.categories.push(category)
 			}
 		}
+	  if(!invoice.amount || invoice.amount === "" || invoice.amount === 0){
+		
 		invoice.amount = price
 	  }
 	  result.invoice = invoice
@@ -280,7 +281,7 @@ router.post('/getBookings', auth, async (req, res) => {
 		if(service){
 			data = []
 			var price = 0
-			for(var categ of service.category){
+			for(var categ of service.categories){
 				if(categ == ""){continue}
 				const category = await Category.findById(categ)
 				price += category.price ? category.price : 0
