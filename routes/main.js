@@ -42,7 +42,7 @@ router.post('/getCustomers',auth,  async (req, res) => {
 	try {
 	  const result = {}
 	  const company_id = req.user.company
-	  const invoice = await Invoice.find({company:company_id})
+	  const invoice = await Invoice.find({company:company_id}).sort({ date: -1 }).limit(15)
 	  result.customers = {data:[],total:0}
 	  for(var inv of invoice){
 		const r = {}
@@ -98,7 +98,7 @@ router.post('/getOrders',auth,  async (req, res) => {
 	try {
 	  const result = {}
 	  const company_id = req.user.company
-	  const invoice = await Invoice.find({company:company_id})
+	  const invoice = await Invoice.find({company:company_id}).sort({ date: -1 }).limit(99)
 	  result.orders = {data:[],total:0}
 	  for(var inv of invoice){
 		const r = {}
@@ -283,7 +283,7 @@ router.post('/recentOrders',auth,  async (req, res) => {
 	  var date = new Date()
 	  date = date.getTime()
 	  
-	  const bookings = await Book.find({company:company_id})
+	  const bookings = await Book.find({company:company_id}).sort({ date: -1 }).limit(5)
 	  result.bookings = []
 	  
 	  for(var book of bookings){
@@ -315,14 +315,20 @@ router.post('/bestSellers', auth, async (req, res) => {
 	try {
 	  const result = {}
 	  const company_id = req.user.company
-	  const books = await Book.find({company:company_id})
+	  const books = await Book.find({company:company_id}).sort({ time: -1 })
 	  var categories = []
+	  var count = 0
 	  for(var book of books){
-		 for(var i of book.service_category){
-			if(i == ""){
-				continue
-			}
-			categories.push(i)
+		  if(count >= 9){break}
+		  const invoice = await Invoice.findById(book.invoice)
+		 if(invoice.complete){
+			 for(var i of book.service_category){
+				if(i == ""){
+					continue
+				}
+				categories.push(i)
+			 }
+			 count += 1
 		 }
 	  }
 	  if(categories.length === 0){
@@ -357,7 +363,7 @@ router.post('/getAnalysis',auth,  async (req, res) => {
 	  const result = {}
 	  const company_id = req.user.company
 	  const company = await Company.findById(company_id)
-	  const invoice = await Invoice.find({company:company_id})
+	  const invoice = await Invoice.find({company:company_id}).sort({ date: -1 }).limit(99)
 	  const bookings = await Book.find({company:company_id})
 	  const services = await Service.find({company:company_id})
 	  const handler = await Handler.find({company:company_id}) 

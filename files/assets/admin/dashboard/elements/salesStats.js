@@ -1,22 +1,23 @@
 import { fetchFunction } from "../../modules.js"
 const chartFunction = (id,labels,data) =>{
+	
 	var xValues = labels;
 	var yValues = data ? data : [70, 30];
 	var barColors = ["#87CEEB", "#28282B"];
-
+	console.log("in chart",id,yValues)
 	new Chart(id, {
 	  type: "pie",
 	  data: {
 		labels: xValues,
 		datasets: [{
 		  backgroundColor: barColors,
-		  data: yValues
+		  data: [70, 30],
 		}]
 	  },
 	  options: {
 		title: {
 		  display: true,
-		 
+		  text:"Invoice analysis",
 		}
 	  }
 	});
@@ -24,7 +25,7 @@ const chartFunction = (id,labels,data) =>{
 }
 
 const barChart= (id,data1,data2,data3) =>{
-	console.log("in")
+	console.log("in",data1,data2,data3)
 	var xValues = ["Jan","Feb","March","April","May","June","July","August","Sept","Oct","Nov","Dec"];
 	//var yValues = data
 	//var barColors = "#28282B";
@@ -51,14 +52,14 @@ const barChart= (id,data1,data2,data3) =>{
             label: data3.name,
             data: data3.data,
             backgroundColor: 'rgba(75, 192, 192, 0.2)',
-            borderColor: 'rgba(75, 192, 192, 1)',
+            borderColor: 'rgba(75, 192, 192, 0.2)',
             borderWidth: 1
           }]
 	  },
 	  options: {
 		title: {
 		  display: true,
-		  text: "Total Visits"
+		  text: "Total Sale statistics"
 		}
 	  }
 	});
@@ -77,23 +78,28 @@ function lifetTimeSales(data){
             name: 'Total Balance',
             data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
           }]
+		  console.log(data)
           for(var dt of data.invoice.data){
-			 
+			dt = dt.invoice
             var date = new Date(dt.date)
+			
             date = date.getMonth()
             if(dt.complete){
-                chartdata[0].data[date] += dt.amount
+				chartdata[0].data[date] += dt.amount
                 chartdata[1].data[date] += dt.amount
             }
             chartdata[2].data[date] += dt.amount
+			chartdata[0].data[date] -= dt.amount
           }
-          $("#salesChart").html('')
-          $("#salesGraph").html('')
-         // console.log(chartdata[0],chartdata[1],chartdata[2])
-        chartFunction("salesChart",[data.invoice.total,data.invoice.cancelled])
-        barChart("salesGraph",chartdata[0],chartdata[1],chartdata[2])
+          $("#salesChart").empty()
+          $("#salesGraph").empty()
+		  $("#salesChart").append(`<canvas class="skeleton-chart" id="salechart"></canvas>`)
+		  $("#salesGraph").append(`<canvas  class="skeleton-chart" id="salegraph"></canvas>`)
+         console.log(chartdata[0],chartdata[1],chartdata[2])
+        chartFunction("salechart",["Total invoice ","Cancelled invoice"],[data.invoice.total,data.invoice.total-data.invoice.complete])
+        barChart("salegraph",chartdata[0],chartdata[1],chartdata[2])
     },999)
-	 console.log(data.invoice.complete,data.invoice)
+	 //console.log(data.invoice.complete,data.invoice)
     return `
     <div class="col-span-1 grid grid-cols-1 gap-2 auto-rows-max">
         <div class="card shadow">
@@ -113,19 +119,19 @@ function lifetTimeSales(data){
                         </div>
                         <div class="flex space-x-1 items-center">
                             <span class="success dot" style="width: 1rem; height: 1rem;"></span>
-                            <div class="self-center">${100*(data.invoice.complete/data.invoice.total) ? 100*(data.invoice.complete/data.invoice.total) : 0} % of orders completed</div>
+                            <div class="self-center">${data.invoice.complete> 0 ? parseInt(100*(data.invoice.complete/data.invoice.total)) : 0} % of orders completed</div>
                         </div>
                         <div class="flex space-x-1 items-center">
                             <span class="critical dot" style="width: 1rem; height: 1rem;"></span>
-                            <div class="self-center">${100*(data.invoice.cancelled/data.invoice.data.length) ? 100*(data.invoice.cancelled/data.invoice.data.length) : 0}% of orders cancelled</div>
+                            <div class="self-center">${data.invoice.cancelled > 0 ? parseInt(100*( data.invoice.cancelled/data.invoice.data.length)) : 0}% of orders cancelled</div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="card-section border-b box-border">
-                <div class="card-session-content pt-lg" id="salesChart">
+                <div class="card-session-content pt-lg " id="salesChart" >
                     <div class="skeleton-wrapper-lifetime">
-                        <div class="skeleton-chart"></div>
+                        <div class="skeleton-chart" ></div>
                     </div>
                 </div>
             </div>
@@ -171,7 +177,7 @@ function bestSellers(data){
 }
 
 function recentOrders(datas){
-    console.log(datas)
+    //console.log(datas)
     let el = ``
     for(var data of datas.bookings){
         el += `
@@ -182,7 +188,7 @@ function recentOrders(datas){
                 </div>
             </td>
             <td>
-                <a href="/admin/orders/edit?${data.invoice._id}" class="font-semibold hover:underline">${data.user.name}</a>
+                <a href="/admin/order/edit?${data.invoice._id}" class="font-semibold hover:underline">${data.user.name}</a>
             </td>
             <td>$${data.invoice.amount}</td>
             <td>${data.service.name}</td>
@@ -198,11 +204,11 @@ export function salesStats(){
         document.getElementById("lifetimeSales").innerHTML = lifetTimeSales(data)
     })
     fetchFunction("/api/models/admin/bestSellers",{},"post",function(data){
-        console.log(data)
+        //console.log(data)
         document.getElementById("bestSellers").innerHTML = bestSellers(data)
     })
     fetchFunction("/api/models/admin/recentOrders",{},"post",function(data){
-        console.log(data)
+        //console.log(data)
         document.getElementById("recentOrders").innerHTML = recentOrders(data)
     })
     return `
@@ -212,7 +218,7 @@ export function salesStats(){
                     <h2 class="card-title">Sale Statistics</h2>
                 </div>
                 <div class="card-section border-b box-border">
-                    <div class="card-session-content pt-lg" id="salesGraph">
+                    <div class="card-session-content pt-lg skeleton-chart" id="salesGraph">
                         <div class="skeleton-wrapper-lifetime">
                             <div class="skeleton-chart"></div>
                         </div>
