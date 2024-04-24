@@ -11,7 +11,7 @@ const chartFunction = (id,labels,data) =>{
 		labels: xValues,
 		datasets: [{
 		  backgroundColor: barColors,
-		  data: [70, 30],
+		  data: yValues,
 		}]
 	  },
 	  options: {
@@ -115,7 +115,7 @@ function lifetTimeSales(data){
                         </div>
                         <div class="flex space-x-1 items-center">
                             <span class="info dot" style="width: 1rem; height: 1rem;"></span>
-                            <div class="self-center">$${data.invoice.total} lifetime sale</div>
+                            <div class="self-center">KES${data.invoice.total} lifetime sale</div>
                         </div>
                         <div class="flex space-x-1 items-center">
                             <span class="success dot" style="width: 1rem; height: 1rem;"></span>
@@ -168,7 +168,7 @@ function bestSellers(data){
             <td>
                 <a href="/admin/categories/edit?${category._id}" class="font-semibold hover:underline">${category.name}</a>
             </td>
-            <td>$${category.price}</td>
+            <td>KES ${category.price}</td>
             <td>${arr[categories.indexOf(category)]}</td>
         </tr>
         `
@@ -190,7 +190,7 @@ function recentOrders(datas){
             <td>
                 <a href="/admin/order/edit?${data.invoice._id}" class="font-semibold hover:underline">${data.user.name}</a>
             </td>
-            <td>$${data.invoice.amount}</td>
+            <td>KES ${data.invoice.amount}</td>
             <td>${data.service.name}</td>
         </tr>
         `

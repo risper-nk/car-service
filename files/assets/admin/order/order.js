@@ -43,7 +43,7 @@ function fetchOrders(data){
                 <span class="success badge"><span class="complete progress rounded-100"></span><span class="self-center title">${book.invoice.complete ? "Complete" : "Pending"}</span></span>
                 <div class="nodejscart-switch"><div><span>${book.invoice.complete ? "Complete"  : "Pending"}</span></div></div>
             </td>
-            <td>$${book.invoice.amount}</td>
+            <td>KES ${book.invoice.amount}</td>
         </tr>
         `
     }

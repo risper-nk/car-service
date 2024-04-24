@@ -25,26 +25,8 @@ export function navigation(){
                     <div>Configure the available payment methods</div>
                 </div>
             </div>
-            <div class="card-section border-b box-border">
-                <div class="flex justify-between card-section-header mb-1">
-                    <h3 class="card-session-title">
-                        <a href="#/admin/setting/shipping">Shipping Setting</a>
-                    </h3>
-                </div>
-                <div class="card-session-content pt-lg">
-                    <div>Where you ship, shipping methods and delivery fee</div>
-                </div>
-            </div>
-            <div class="card-section border-b box-border">
-                <div class="flex justify-between card-section-header mb-1">
-                    <h3 class="card-session-title">
-                        <a href="#/admin/setting/tax">Tax Setting</a>
-                    </h3>
-                </div>
-                <div class="card-session-content pt-lg">
-                    <div>Configure tax classes and tax rates</div>
-                </div>
-            </div>
+           
+            
         </div>
     </div>`
 }
